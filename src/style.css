@@ -1,8 +1,3 @@
-/* ============================================
-   WYRM.STUDIOS - MOBILE OPTIMIZED
-   Palette: #316CD3, #F5F5F5, #1F2C5B, #DC142C, #1A1A1A
-   ============================================ */
-
 :root {
     --bg: #1A1A1A;
     --text: #F5F5F5;
@@ -37,7 +32,6 @@ body {
     transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* iOS Safe Area */
 @supports (padding: max(0px)) {
     .nav-pill {
         padding-top: max(0.8rem, env(safe-area-inset-top));
@@ -60,7 +54,6 @@ body {
     background: linear-gradient(180deg, #F5F5F5 0%, #F5F5F5 30%, #E0E5F0 60%, #316CD3 100%);
 }
 
-/* NAV - DESKTOP */
 .nav-pill {
     position: fixed;
     top: 20px;
@@ -172,7 +165,6 @@ body {
 [data-theme="light"] .theme-btn .icon-sun { display: none; opacity: 0; }
 [data-theme="light"] .theme-btn .icon-moon { display: block; opacity: 1; }
 
-/* CTA Button with Hover Line */
 .nav-cta-btn {
     position: relative;
     padding: 0.6rem 1.8rem;
@@ -207,7 +199,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* MOBILE PANEL NAV */
 .mobile-hamburger {
     display: none;
     position: fixed;
@@ -340,7 +331,6 @@ body {
     color: var(--text-dim);
 }
 
-/* PAGE TRANSITIONS - SMOOTHER & SLOWER */
 .page {
     position: absolute;
     top: 0;
@@ -348,8 +338,8 @@ body {
     width: 100%;
     min-height: 100vh;
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
 }
 
@@ -365,13 +355,12 @@ main {
     position: relative;
 }
 
-/* VIDEO - MOVED UP */
 .video-container {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 2rem 2rem 1rem;
+    padding: 1rem 2rem 1rem;
 }
 
 .video-wrapper {
@@ -427,11 +416,10 @@ main {
     opacity: 0.6;
 }
 
-/* PORTFOLIO - MOVED DOWN & FIXED SCROLL */
 .portfolio-container {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 8rem 2rem 3rem;
+    padding: 7rem 2rem 3rem;
     min-height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
@@ -525,7 +513,7 @@ main {
     background: var(--bg);
     border-radius: 20px;
     overflow: hidden;
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
 }
 
@@ -581,7 +569,6 @@ main {
     to { opacity: 1; transform: scale(1); }
 }
 
-/* ABOUT - GLASS SECTION & 3D MODEL - MOVED DOWN */
 .about-wrapper {
     position: relative;
     width: 100%;
@@ -590,7 +577,7 @@ main {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding: 4rem 0;
+    padding: 5rem 0;
 }
 
 .about-model-area {
@@ -743,7 +730,6 @@ main {
     max-height: 300px;
 }
 
-/* About Footer */
 .about-footer {
     margin-top: 3rem;
     padding-top: 2rem;
@@ -786,11 +772,10 @@ main {
     color: var(--text);
 }
 
-/* CONTACT */
 .center-container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 8rem 2rem 3rem;
+    padding: 7rem 2rem 3rem;
     text-align: center;
     min-height: 100vh;
     display: flex;
@@ -857,7 +842,6 @@ main {
     color: var(--bg);
 }
 
-/* MODAL FORM */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -1062,7 +1046,6 @@ main {
     transform: scale(1.02);
 }
 
-/* SIRI */
 .siri-container {
     position: fixed;
     bottom: 40px;
@@ -1113,120 +1096,35 @@ main {
     transform: translateY(0) scale(1);
 }
 
-/* RESPONSIVE - MOBILE OPTIMIZED */
 @media (max-width: 900px) {
-    .nav-pill {
-        display: none;
-    }
-    
-    .mobile-hamburger {
-        display: flex;
-    }
-    
-    .mobile-panel {
-        display: block;
-    }
-    
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
+    .nav-pill { display: none; }
+    .mobile-hamburger { display: flex; }
+    .mobile-panel { display: block; }
+    .projects-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
-    .about-wrapper {
-        flex-direction: column;
-        padding: 6rem 0 2rem;
-    }
-    
-    .about-model-area {
-        position: relative;
-        width: 100%;
-        height: 40vh;
-        right: 0;
-        top: 0;
-        transform: none;
-    }
-    
-    .model-3d-about {
-        transform: scale(1);
-    }
-    
-    .about-glass-card {
-        margin-right: 0;
-        left: 0;
-        margin-top: -60px;
-        width: 90%;
-        max-height: none;
-    }
-    
-    .about-name {
-        font-size: 2.5rem;
-    }
-    
-    .about-title {
-        font-size: 1rem;
-    }
-    
-    .accordion-header {
-        font-size: 1rem;
-        padding: 1.2rem 0;
-    }
-    
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .modal-content {
-        padding: 1.5rem;
-    }
-    
-    .modal-header h2 {
-        font-size: 1.5rem;
-    }
-    
-    .siri-container {
-        bottom: 20px;
-        right: 20px;
-    }
-    
-    .siri-mascot {
-        width: 90px;
-        height: 90px;
-    }
-    
-    .portfolio-container {
-        padding: 6rem 1rem 3rem;
-    }
-    
-    .video-wrapper {
-        aspect-ratio: 16/9;
-    }
-    
-    .play-button {
-        width: 60px;
-        height: 60px;
-    }
+    .about-wrapper { flex-direction: column; padding: 6rem 0 2rem; }
+    .about-model-area { position: relative; width: 100%; height: 40vh; right: 0; top: 0; transform: none; }
+    .model-3d-about { transform: scale(1); }
+    .about-glass-card { margin-right: 0; left: 0; margin-top: -60px; width: 90%; max-height: none; }
+    .about-name { font-size: 2.5rem; }
+    .about-title { font-size: 1rem; }
+    .accordion-header { font-size: 1rem; padding: 1.2rem 0; }
+    .form-row { grid-template-columns: 1fr; }
+    .modal-content { padding: 1.5rem; }
+    .modal-header h2 { font-size: 1.5rem; }
+    .siri-container { bottom: 20px; right: 20px; }
+    .siri-mascot { width: 90px; height: 90px; }
+    .portfolio-container { padding: 6rem 1rem 3rem; }
+    .video-wrapper { aspect-ratio: 16/9; }
+    .play-button { width: 60px; height: 60px; }
 }
 
 @media (max-width: 480px) {
-    .mobile-panel {
-        width: 90%;
-    }
-    
-    .about-glass-card {
-        padding: 2rem 1.5rem;
-    }
-    
-    .about-name {
-        font-size: 2rem;
-    }
-    
-    .filter-bar {
-        gap: 0.3rem;
-    }
-    
-    .filter-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-    }
+    .mobile-panel { width: 90%; }
+    .about-glass-card { padding: 2rem 1.5rem; }
+    .about-name { font-size: 2rem; }
+    .filter-bar { gap: 0.3rem; }
+    .filter-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
 }
