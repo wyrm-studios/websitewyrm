@@ -17,7 +17,6 @@ let els = {};
 let modelViewer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Loaded - Initializing...');
     cacheElements();
     loadTheme();
     initNav();
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoPlayer();
     initModal();
     init3DModel();
-    console.log('Initialization complete');
 });
 
 function cacheElements() {
@@ -54,29 +52,20 @@ function cacheElements() {
         formSuccess: document.getElementById('formSuccess'),
         closeSuccess: document.getElementById('closeSuccess')
     };
-    
-    console.log('Elements cached:', els);
 }
 
-/* ========== NAVIGATION ========== */
 function initNav() {
-    console.log('Initializing navigation...');
-    
-    // Desktop nav links
     els.navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('Nav link clicked');
             const pageId = link.getAttribute('data-page');
             if (pageId) switchPage(pageId);
         });
     });
     
-    // Mobile nav links
     els.mobileNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log('Mobile nav link clicked');
             const pageId = link.getAttribute('data-page');
             if (pageId) {
                 switchPage(pageId);
@@ -87,13 +76,11 @@ function initNav() {
 }
 
 function switchPage(pageId) {
-    console.log('Switching to page:', pageId);
     const currentPage = document.querySelector('.page.active');
     const targetPage = document.getElementById(pageId);
     
     if (!targetPage || currentPage?.id === pageId) return;
     
-    // Fade out current page
     if (currentPage) {
         currentPage.style.opacity = '0';
         currentPage.style.transform = 'translateY(-20px)';
@@ -105,7 +92,6 @@ function switchPage(pageId) {
             currentPage.style.transform = 'translateY(20px)';
         }
         
-        // Activate new page
         targetPage.classList.add('active');
         void targetPage.offsetWidth;
         targetPage.style.opacity = '1';
@@ -133,7 +119,6 @@ function switchPage(pageId) {
     });
 }
 
-/* ========== MOBILE PANEL ========== */
 function initMobileNav() {
     if (!els.openMobilePanel || !els.closeMobilePanel) return;
     
@@ -159,7 +144,6 @@ function closeMobilePanel() {
     document.body.style.overflow = '';
 }
 
-/* ========== THEME ========== */
 function initTheme() {
     if (!els.themeToggle) return;
     
@@ -178,7 +162,6 @@ function loadTheme() {
     }
 }
 
-/* ========== VIDEO ========== */
 function initVideoPlayer() {
     const video = document.getElementById('introVideo');
     const playButton = document.getElementById('playButton');
@@ -199,13 +182,8 @@ function initVideoPlayer() {
     video.addEventListener('pause', () => { playButton.style.opacity = '1'; });
 }
 
-/* ========== SIRI ========== */
 function initSiri() {
-    console.log('Initializing Siri...');
-    if (!els.siriImg || !els.siriMascot) {
-        console.log('Siri elements not found');
-        return;
-    }
+    if (!els.siriImg || !els.siriMascot) return;
     
     const frameUrls = [];
     for (let i = 1; i <= 20; i++) {
@@ -214,30 +192,19 @@ function initSiri() {
         frameUrls.push(url);
     }
     
-    // Preload images
     frameUrls.forEach(url => { 
         const img = new Image(); 
         img.src = url;
     });
     
-    console.log('Siri frames loaded:', frameUrls.length);
-    
-    // Animation loop
     state.siriTimer = setInterval(() => {
         state.siriFrame = (state.siriFrame + 1) % frameUrls.length;
         els.siriImg.src = frameUrls[state.siriFrame];
     }, 100);
     
-    // Show message every 10 seconds
     setInterval(() => showSiriMessage(), 10000);
     
-    // Click to show message
-    els.siriMascot.addEventListener('click', () => {
-        console.log('Siri clicked');
-        showSiriMessage();
-    });
-    
-    console.log('Siri initialized');
+    els.siriMascot.addEventListener('click', showSiriMessage);
 }
 
 function showSiriMessage() {
@@ -248,7 +215,6 @@ function showSiriMessage() {
     setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
-/* ========== FILTER ========== */
 function initFilter() {
     if (!els.filterBtns || !els.projects) return;
     
@@ -272,7 +238,6 @@ function initFilter() {
     });
 }
 
-/* ========== ACCORDION ========== */
 function toggleAccordion(element) {
     const item = element.parentElement;
     const isActive = item.classList.contains('active');
@@ -280,7 +245,6 @@ function toggleAccordion(element) {
     if (!isActive) item.classList.add('active');
 }
 
-/* ========== 3D MODEL ========== */
 function init3DModel() {
     modelViewer = document.getElementById('aboutModel');
     if (modelViewer) {
@@ -304,12 +268,8 @@ function disable3DModel() {
     }
 }
 
-/* ========== MODAL ========== */
 function initModal() {
-    console.log('Initializing modal...');
-    
     const openTriggers = [els.openHireModal, els.openHireModalMobile, els.openHireModalContact].filter(Boolean);
-    console.log('Modal triggers:', openTriggers.length);
     
     openTriggers.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -341,12 +301,9 @@ function initModal() {
     if (els.hireForm) {
         els.hireForm.addEventListener('submit', handleFormSubmit);
     }
-    
-    console.log('Modal initialized');
 }
 
 function openModal() {
-    console.log('Opening modal');
     if (els.hireModal) {
         els.hireModal.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -355,7 +312,6 @@ function openModal() {
 }
 
 function closeModal() {
-    console.log('Closing modal');
     if (els.hireModal) {
         els.hireModal.classList.remove('active');
         document.body.style.overflow = '';
