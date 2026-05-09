@@ -17,6 +17,7 @@ let els = {};
 let modelViewer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM Loaded - Initializing...');
     cacheElements();
     loadTheme();
     initNav();
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoPlayer();
     initModal();
     init3DModel();
+    console.log('✅ Initialization complete');
 });
 
 function cacheElements() {
@@ -52,13 +54,21 @@ function cacheElements() {
         formSuccess: document.getElementById('formSuccess'),
         closeSuccess: document.getElementById('closeSuccess')
     };
+    
+    console.log('📦 Elements cached:', {
+        filterBtns: els.filterBtns.length,
+        projects: els.projects.length
+    });
 }
 
 function initNav() {
+    console.log('🧭 Initializing navigation...');
+    
     els.navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const pageId = link.getAttribute('data-page');
+            console.log('📍 Nav clicked:', pageId);
             if (pageId) switchPage(pageId);
         });
     });
@@ -76,6 +86,7 @@ function initNav() {
 }
 
 function switchPage(pageId) {
+    console.log('🔄 Switching to page:', pageId);
     const currentPage = document.querySelector('.page.active');
     const targetPage = document.getElementById(pageId);
     
@@ -216,19 +227,44 @@ function showSiriMessage() {
 }
 
 function initFilter() {
-    if (!els.filterBtns || !els.projects) return;
+    console.log('🔍 Initializing filter...');
+    console.log('Filter buttons found:', els.filterBtns.length);
+    console.log('Projects found:', els.projects.length);
+    
+    if (!els.filterBtns.length || !els.projects.length) {
+        console.error('❌ Filter elements not found!');
+        return;
+    }
     
     els.filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            els.filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const filterValue = btn.getAttribute('data-filter');
+            console.log(' Filter button clicked');
             
+            // Remove active class from all buttons
+            els.filterBtns.forEach(b => {
+                b.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            const filterValue = btn.getAttribute('data-filter');
+            console.log('Filter value:', filterValue);
+            
+            // Filter projects
             els.projects.forEach(project => {
                 const category = project.getAttribute('data-category');
+                console.log('Project category:', category);
+                
                 if (filterValue === 'all' || category === filterValue) {
                     project.classList.remove('hidden');
                     project.classList.add('show');
+                    // Trigger reflow for animation
+                    void project.offsetWidth;
+                    project.style.animation = 'none';
+                    setTimeout(() => {
+                        project.style.animation = 'fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    }, 10);
                 } else {
                     project.classList.remove('show');
                     project.classList.add('hidden');
@@ -236,6 +272,8 @@ function initFilter() {
             });
         });
     });
+    
+    console.log('✅ Filter initialized successfully');
 }
 
 function toggleAccordion(element) {
