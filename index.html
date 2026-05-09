@@ -8,11 +8,8 @@
     <meta name="description" content="Premium visuals, branding & motion design">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="src/style.css">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
-    <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
 <body>
     <div class="bg-gradient"></div>
@@ -20,15 +17,10 @@
     <nav class="nav-pill desktop-nav">
         <div class="nav-left">
             <a href="#" class="nav-link active" data-page="home">Home</a>
-            <a href="#" class="nav-link" data-page="work">Work</a>
         </div>
         
         <div class="nav-center">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" 
-                 alt="WYRM.STUDIOS" 
-                 class="logo-img desktop-logo" 
-                 style="height:56px;width:auto;"
-                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="logo-img desktop-logo" onerror="this.style.display='none'">
             <span class="logo-text">WYRM.STUDIOS®</span>
         </div>
         
@@ -46,18 +38,13 @@
 
     <div class="mobile-panel" id="mobilePanel">
         <div class="mobile-panel-header">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" 
-                 alt="WYRM.STUDIOS" 
-                 class="mobile-logo" 
-                 style="height:44px;width:auto;"
-                 onerror="this.style.display='none'">
+            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="mobile-logo" onerror="this.style.display='none'">
             <button class="mobile-close-btn" id="closeMobilePanel" aria-label="Close menu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
         </div>
         <div class="mobile-nav-links">
             <a href="#" class="mobile-nav-link" data-page="home">Home</a>
-            <a href="#" class="mobile-nav-link" data-page="work">Work</a>
             <a href="#" class="mobile-nav-link" data-page="about">About</a>
             <button class="mobile-cta-btn" id="openHireModalMobile">Hire Us</button>
         </div>
@@ -77,7 +64,7 @@
             <div class="video-container">
                 <div class="video-wrapper">
                     <iframe id="vimeoVideo" 
-                            src="https://player.vimeo.com/video/1190794803?autoplay=1&muted=1&loop=1&byline=0&title=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=1" 
+                            src="https://player.vimeo.com/video/1190794803?autoplay=1&muted=0&loop=1&byline=0&title=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=1" 
                             width="100%" 
                             height="100%" 
                             frameborder="0" 
@@ -90,173 +77,12 @@
             </div>
         </section>
 
-        <section id="work" class="page">
-            <div class="portfolio-container">
-                <div class="portfolio-inner">
-                    <div class="filter-bar">
-                        <button class="filter-btn active" data-filter="all">All Projects</button>
-                        <button class="filter-btn" data-filter="web">Web Design</button>
-                        <button class="filter-btn" data-filter="branding">Branding</button>
-                        <button class="filter-btn" data-filter="motion">Motion</button>
-                        <button class="filter-btn" data-filter="video">Video Editing</button>
-                    </div>
-                    <div class="projects-grid">
-
-                        <div class="project-card" data-category="motion"
-                             data-title="NIKE — Launch Campaign"
-                             data-desc="Global brand activation through powerful motion storytelling. A series of 30-second hero films crafted to launch the new season line, combining high-speed cinematography with kinetic motion graphics."
-                             data-year="2026"
-                             data-tags="Motion Design,Direction,Color Grade"
-                             data-bg="linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)">
-                            <div class="project-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
-                                <div class="project-image-overlay"><span class="project-view-btn">View Project</span></div>
-                            </div>
-                            <div class="project-info">
-                                <span class="project-category-tag">Motion</span>
-                                <h3>NIKE — Launch Campaign</h3>
-                                <p>Global brand activation through powerful motion storytelling — 30s hero films.</p>
-                                <div class="project-meta">
-                                    <span class="project-year">2026</span>
-                                    <div class="project-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card" data-category="branding"
-                             data-title="APPLE — Brand Film"
-                             data-desc="A premium visual narrative produced for Apple's internal brand showcase. The film captures the essence of innovation and design excellence through abstract macro cinematography and precise sound design."
-                             data-year="2026"
-                             data-tags="Branding,Film,Art Direction"
-                             data-bg="linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #404040 100%)">
-                            <div class="project-image" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #404040 100%);">
-                                <div class="project-image-overlay"><span class="project-view-btn">View Project</span></div>
-                            </div>
-                            <div class="project-info">
-                                <span class="project-category-tag">Branding</span>
-                                <h3>APPLE — Brand Film</h3>
-                                <p>Premium visual narrative showcasing innovation and design excellence.</p>
-                                <div class="project-meta">
-                                    <span class="project-year">2026</span>
-                                    <div class="project-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card" data-category="web"
-                             data-title="WYRM — Digital Experience"
-                             data-desc="Full design and development of the WYRM.STUDIOS portfolio. An immersive web platform built with cinematic page transitions, 3D model integration, and glassmorphism UI — all hand-coded without frameworks."
-                             data-year="2026"
-                             data-tags="Web Design,Development,3D,Motion"
-                             data-bg="linear-gradient(135deg, #0d0d1a 0%, #1a1a40 50%, #316CD3 100%)">
-                            <div class="project-image" style="background: linear-gradient(135deg, #0d0d1a 0%, #1a1a40 50%, #316CD3 100%);">
-                                <div class="project-image-overlay"><span class="project-view-btn">View Project</span></div>
-                            </div>
-                            <div class="project-info">
-                                <span class="project-category-tag">Web Design</span>
-                                <h3>WYRM — Digital Experience</h3>
-                                <p>Immersive web platform with cinematic interactions and 3D elements.</p>
-                                <div class="project-meta">
-                                    <span class="project-year">2026</span>
-                                    <div class="project-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card" data-category="video"
-                             data-title="NIKE — Documentary Edit"
-                             data-desc="Behind-the-scenes athlete journey documenting a full training season. High-end post-production with heavy color grading, sound design, and pacing crafted to match the emotional arc of the story."
-                             data-year="2025"
-                             data-tags="Video Editing,Color Grade,Sound Design"
-                             data-bg="linear-gradient(135deg, #1a0d0d 0%, #3d1515 50%, #DC142C 100%)">
-                            <div class="project-image" style="background: linear-gradient(135deg, #1a0d0d 0%, #3d1515 50%, #DC142C 100%);">
-                                <div class="project-image-overlay"><span class="project-view-btn">View Project</span></div>
-                            </div>
-                            <div class="project-info">
-                                <span class="project-category-tag">Video Editing</span>
-                                <h3>NIKE — Documentary Edit</h3>
-                                <p>Behind-the-scenes athlete journey with high-end post-production.</p>
-                                <div class="project-meta">
-                                    <span class="project-year">2025</span>
-                                    <div class="project-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card" data-category="motion"
-                             data-title="ADIDAS — Reel 2025"
-                             data-desc="A motion reel crafted for Adidas Originals featuring product reveals and lifestyle sequences. Blends 3D product renders with real footage using seamless compositing and dynamic typography."
-                             data-year="2025"
-                             data-tags="Motion Design,3D,Compositing"
-                             data-bg="linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #2d5a8e 100%)">
-                            <div class="project-image" style="background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #2d5a8e 100%);">
-                                <div class="project-image-overlay"><span class="project-view-btn">View Project</span></div>
-                            </div>
-                            <div class="project-info">
-                                <span class="project-category-tag">Motion</span>
-                                <h3>ADIDAS — Reel 2025</h3>
-                                <p>Product reveals and lifestyle sequences blending 3D and live footage.</p>
-                                <div class="project-meta">
-                                    <span class="project-year">2025</span>
-                                    <div class="project-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="project-card" data-category="branding"
-                             data-title="LUXE — Identity System"
-                             data-desc="Full visual identity system for a luxury hospitality brand. Covers logo design, typography system, color palette, stationery, and brand guidelines delivered in a comprehensive 60-page brand book."
-                             data-year="2025"
-                             data-tags="Branding,Identity,Typography"
-                             data-bg="linear-gradient(135deg, #1a1505 0%, #3d3010 50%, #8B6914 100%)">
-                            <div class="project-image" style="background: linear-gradient(135deg, #1a1505 0%, #3d3010 50%, #8B6914 100%);">
-                                <div class="project-image-overlay"><span class="project-view-btn">View Project</span></div>
-                            </div>
-                            <div class="project-info">
-                                <span class="project-category-tag">Branding</span>
-                                <h3>LUXE — Identity System</h3>
-                                <p>Full visual identity for a luxury hospitality brand including brand book.</p>
-                                <div class="project-meta">
-                                    <span class="project-year">2025</span>
-                                    <div class="project-arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Project Detail Overlay -->
-        <div class="project-detail-overlay" id="projectDetailOverlay">
-            <div class="project-detail-panel" id="projectDetailPanel">
-                <div class="project-detail-image" id="projectDetailImage">
-                    <div class="project-detail-image-overlay"></div>
-                    <button class="project-detail-close" id="closeProjectDetail">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    </button>
-                </div>
-                <div class="project-detail-body">
-                    <span class="project-detail-tag" id="projectDetailTag"></span>
-                    <h2 class="project-detail-title" id="projectDetailTitle"></h2>
-                    <span class="project-detail-year" id="projectDetailYear"></span>
-                    <p class="project-detail-desc" id="projectDetailDesc"></p>
-                    <div class="project-detail-tags" id="projectDetailTags"></div>
-                    <button class="project-detail-cta" id="projectDetailCta">
-                        Start a Similar Project
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <section id="about" class="page">
             <div class="about-wrapper">
                 <div class="about-model-area">
-                         Make sure retro_computer_setup_free.glb is committed to your repo root on GitHub. -->
                     <model-viewer 
                         id="aboutModel"
-                        src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/retro_computer_setup_free.glb"
+                        src="./retro_computer_setup_free.glb" 
                         alt="3D Retro Computer Setup"
                         auto-rotate 
                         camera-controls 
@@ -415,6 +241,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="src/script.js"></script>
 </body>
 </html>
