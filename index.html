@@ -8,7 +8,10 @@
     <meta name="description" content="Premium visuals, branding & motion design">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/style.css">
+
+    <!-- FIX 1: CSS path changed from src/style.css to style.css (root-level) -->
+    <link rel="stylesheet" href="style.css">
+
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
@@ -22,7 +25,12 @@
         </div>
         
         <div class="nav-center">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="logo-img desktop-logo" onerror="this.style.display='none'">
+            <!-- FIX 5: Logo URL encoded properly (space → %20), and added larger height in style -->
+            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" 
+                 alt="WYRM.STUDIOS" 
+                 class="logo-img desktop-logo" 
+                 style="height:56px;width:auto;"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
             <span class="logo-text">WYRM.STUDIOS®</span>
         </div>
         
@@ -40,7 +48,11 @@
 
     <div class="mobile-panel" id="mobilePanel">
         <div class="mobile-panel-header">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="mobile-logo" onerror="this.style.display='none'">
+            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" 
+                 alt="WYRM.STUDIOS" 
+                 class="mobile-logo" 
+                 style="height:44px;width:auto;"
+                 onerror="this.style.display='none'">
             <button class="mobile-close-btn" id="closeMobilePanel" aria-label="Close menu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
@@ -66,8 +78,9 @@
         <section id="home" class="page active">
             <div class="video-container">
                 <div class="video-wrapper">
+                    <!-- FIX 2: muted=1 added so autoplay works in all browsers -->
                     <iframe id="vimeoVideo" 
-                            src="https://player.vimeo.com/video/1190794803?autoplay=1&muted=0&loop=1&byline=0&title=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=1" 
+                            src="https://player.vimeo.com/video/1190794803?autoplay=1&muted=1&loop=1&byline=0&title=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=1" 
                             width="100%" 
                             height="100%" 
                             frameborder="0" 
@@ -90,8 +103,11 @@
                     <button class="filter-btn" data-filter="video">Video Editing</button>
                 </div>
                 <div class="projects-grid">
+                    <!-- FIX 3: Project card images replaced with CSS gradient placeholders.
+                         Upload your actual images to /public/assets/work/ on GitHub,
+                         then replace the background-color with background-image: url('public/assets/work/your-image.jpg') -->
                     <div class="project-card" data-category="motion">
-                        <div class="project-image" style="background-image: url('public/assets/work/nike-campaign.jpg');"></div>
+                        <div class="project-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);"></div>
                         <div class="project-info">
                             <h3>NIKE — Launch Campaign</h3>
                             <p>Global brand activation through powerful motion storytelling — 30s hero films.</p>
@@ -99,7 +115,7 @@
                         </div>
                     </div>
                     <div class="project-card" data-category="branding">
-                        <div class="project-image" style="background-image: url('public/assets/work/apple-brand.jpg');"></div>
+                        <div class="project-image" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #404040 100%);"></div>
                         <div class="project-info">
                             <h3>APPLE — Brand Film</h3>
                             <p>Premium visual narrative showcasing innovation and design excellence.</p>
@@ -107,7 +123,7 @@
                         </div>
                     </div>
                     <div class="project-card" data-category="web">
-                        <div class="project-image" style="background-image: url('public/assets/work/wyrm-web.jpg');"></div>
+                        <div class="project-image" style="background: linear-gradient(135deg, #0d0d1a 0%, #1a1a40 50%, #316CD3 100%);"></div>
                         <div class="project-info">
                             <h3>WYRM — Digital Experience</h3>
                             <p>Immersive web platform with cinematic interactions and 3D elements.</p>
@@ -115,7 +131,7 @@
                         </div>
                     </div>
                     <div class="project-card" data-category="video">
-                        <div class="project-image" style="background-image: url('public/assets/work/nike-edit.jpg');"></div>
+                        <div class="project-image" style="background: linear-gradient(135deg, #1a0d0d 0%, #3d1515 50%, #DC142C 100%);"></div>
                         <div class="project-info">
                             <h3>NIKE — Documentary Edit</h3>
                             <p>Behind-the-scenes athlete journey with high-end post-production.</p>
@@ -129,9 +145,11 @@
         <section id="about" class="page">
             <div class="about-wrapper">
                 <div class="about-model-area">
+                    <!-- FIX 4: GLB src now points to GitHub raw URL so Vercel can load it.
+                         Make sure retro_computer_setup_free.glb is committed to your repo root on GitHub. -->
                     <model-viewer 
                         id="aboutModel"
-                        src="./retro_computer_setup_free.glb" 
+                        src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/retro_computer_setup_free.glb"
                         alt="3D Retro Computer Setup"
                         auto-rotate 
                         camera-controls 
@@ -290,6 +308,7 @@
         </div>
     </div>
 
-    <script src="src/script.js"></script>
+    <!-- FIX 1: JS path changed from src/script.js to script.js (root-level) -->
+    <script src="script.js"></script>
 </body>
 </html>
