@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSiri();
     initTheme();
     initFilter();
+    initProjectDetail();
     initVimeoPlayer();
     initModal();
     init3DModel();
@@ -212,33 +213,76 @@ function showSiriMessage() {
 }
 
 function initFilter() {
-    if (!els.filterBtns || !els.projects) return;
-    
-    els.filterBtns.forEach(btn => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projects = document.querySelectorAll('.project-card');
+    if (!filterBtns.length) return;
+
+    filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            els.filterBtns.forEach(b => b.classList.remove('active'));
+            filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
-            const filterValue = btn.getAttribute('data-filter');
-            
-            els.projects.forEach(project => {
-                const category = project.getAttribute('data-category');
-                
-                if (filterValue === 'all' || category === filterValue) {
-                    project.classList.remove('hidden');
-                    project.classList.add('show');
-                    void project.offsetWidth;
-                    project.style.animation = 'none';
-                    setTimeout(() => {
-                        project.style.animation = 'fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                    }, 10);
+            const val = btn.getAttribute('data-filter');
+            projects.forEach(card => {
+                const cat = card.getAttribute('data-category');
+                if (val === 'all' || cat === val) {
+                    card.classList.remove('hidden');
+                    card.classList.add('show');
                 } else {
-                    project.classList.remove('show');
-                    project.classList.add('hidden');
+                    card.classList.add('hidden');
+                    card.classList.remove('show');
                 }
             });
         });
     });
+}
+
+function initProjectDetail() {
+    const overlay = document.getElementById('projectDetailOverlay');
+    const closeBtn = document.getElementById('closeProjectDetail');
+    const ctaBtn = document.getElementById('projectDetailCta');
+    const cards = document.querySelectorAll('.project-card');
+
+    if (!overlay) return;
+
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            const title = card.getAttribute('data-title');
+            const desc = card.getAttribute('data-desc');
+            const year = card.getAttribute('data-year');
+            const tags = card.getAttribute('data-tags');
+            const bg = card.getAttribute('data-bg');
+            const category = card.getAttribute('data-category');
+
+            document.getElementById('projectDetailTitle').textContent = title;
+            document.getElementById('projectDetailDesc').textContent = desc;
+            document.getElementById('projectDetailYear').textContent = year;
+            document.getElementById('projectDetailTag').textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            document.getElementById('projectDetailImage').style.background = bg;
+
+            const tagsContainer = document.getElementById('projectDetailTags');
+            tagsContainer.innerHTML = '';
+            tags.split(',').forEach(tag => {
+                const pill = document.createElement('span');
+                pill.className = 'project-detail-pill';
+                pill.textContent = tag.trim();
+                tagsContainer.appendChild(pill);
+            });
+
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeDetail() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeDetail);
+    if (ctaBtn) ctaBtn.addEventListener('click', () => { closeDetail(); openModal(); });
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeDetail(); });
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
 }
 
 function toggleAccordion(element) {
