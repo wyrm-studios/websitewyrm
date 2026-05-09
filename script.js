@@ -15,7 +15,6 @@ const state = {
 
 let els = {};
 let modelViewer = null;
-let vimeoPlayer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     cacheElements();
@@ -24,9 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileNav();
     initSiri();
     initTheme();
-    initFilter();
-    initProjectDetail();
-    initVimeoPlayer();
     initModal();
     init3DModel();
 });
@@ -40,8 +36,6 @@ function cacheElements() {
         siriImg: document.getElementById('siriImg'),
         siriBubble: document.getElementById('siriBubble'),
         siriMascot: document.getElementById('siriMascot'),
-        filterBtns: document.querySelectorAll('.filter-btn'),
-        projects: document.querySelectorAll('.project-card'),
         mobilePanel: document.getElementById('mobilePanel'),
         openMobilePanel: document.getElementById('openMobilePanel'),
         closeMobilePanel: document.getElementById('closeMobilePanel'),
@@ -98,11 +92,6 @@ function switchPage(pageId) {
         void targetPage.offsetWidth;
         targetPage.style.opacity = '1';
         targetPage.style.transform = 'translateY(0)';
-        
-        if (pageId === 'work') {
-            const container = document.querySelector('.portfolio-container');
-            if (container) container.scrollTop = 0;
-        }
         
         if (pageId !== 'about' && modelViewer) {
             disable3DModel();
@@ -164,21 +153,6 @@ function loadTheme() {
     }
 }
 
-function initVimeoPlayer() {
-    const iframe = document.querySelector('#vimeoVideo');
-    if (iframe) {
-        vimeoPlayer = new Vimeo.Player(iframe);
-        
-        vimeoPlayer.on('loaded', () => {
-            console.log('Vimeo video loaded');
-        });
-        
-        vimeoPlayer.on('error', (error) => {
-            console.error('Vimeo player error:', error);
-        });
-    }
-}
-
 function initSiri() {
     if (!els.siriImg || !els.siriMascot) return;
     
@@ -210,79 +184,6 @@ function showSiriMessage() {
     els.siriBubble.textContent = msg;
     els.siriBubble.classList.add('show');
     setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
-}
-
-function initFilter() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projects = document.querySelectorAll('.project-card');
-    if (!filterBtns.length) return;
-
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const val = btn.getAttribute('data-filter');
-            projects.forEach(card => {
-                const cat = card.getAttribute('data-category');
-                if (val === 'all' || cat === val) {
-                    card.classList.remove('hidden');
-                    card.classList.add('show');
-                } else {
-                    card.classList.add('hidden');
-                    card.classList.remove('show');
-                }
-            });
-        });
-    });
-}
-
-function initProjectDetail() {
-    const overlay = document.getElementById('projectDetailOverlay');
-    const closeBtn = document.getElementById('closeProjectDetail');
-    const ctaBtn = document.getElementById('projectDetailCta');
-    const cards = document.querySelectorAll('.project-card');
-
-    if (!overlay) return;
-
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            const title = card.getAttribute('data-title');
-            const desc = card.getAttribute('data-desc');
-            const year = card.getAttribute('data-year');
-            const tags = card.getAttribute('data-tags');
-            const bg = card.getAttribute('data-bg');
-            const category = card.getAttribute('data-category');
-
-            document.getElementById('projectDetailTitle').textContent = title;
-            document.getElementById('projectDetailDesc').textContent = desc;
-            document.getElementById('projectDetailYear').textContent = year;
-            document.getElementById('projectDetailTag').textContent = category.charAt(0).toUpperCase() + category.slice(1);
-            document.getElementById('projectDetailImage').style.background = bg;
-
-            const tagsContainer = document.getElementById('projectDetailTags');
-            tagsContainer.innerHTML = '';
-            tags.split(',').forEach(tag => {
-                const pill = document.createElement('span');
-                pill.className = 'project-detail-pill';
-                pill.textContent = tag.trim();
-                tagsContainer.appendChild(pill);
-            });
-
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-    });
-
-    function closeDetail() {
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    if (closeBtn) closeBtn.addEventListener('click', closeDetail);
-    if (ctaBtn) ctaBtn.addEventListener('click', () => { closeDetail(); openModal(); });
-    overlay.addEventListener('click', e => { if (e.target === overlay) closeDetail(); });
-
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
 }
 
 function toggleAccordion(element) {
