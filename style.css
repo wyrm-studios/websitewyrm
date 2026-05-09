@@ -1384,3 +1384,202 @@ main {
     .project-detail-image { height: 200px; }
     .project-view-btn { font-size: 0.75rem; padding: 0.5rem 1rem; }
 }
+
+/* Project Page Styles */
+.project-page {
+    min-height: 100vh;
+    padding-top: 100px;
+}
+
+.project-hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.project-hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 800px;
+}
+
+.project-hero .project-category-tag {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+}
+
+.project-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 1rem 0;
+    line-height: 1.1;
+}
+
+.project-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 2rem 0;
+    font-weight: 300;
+}
+
+.project-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+.project-divider {
+    opacity: 0.5;
+}
+
+.project-content-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+}
+
+.project-description h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 2.5rem 0 1rem 0;
+}
+
+.project-description h2:first-child {
+    margin-top: 0;
+}
+
+.project-description p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+}
+
+.project-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+}
+
+.project-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.detail-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.detail-value {
+    font-size: 1rem;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.project-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid transparent;
+}
+
+.btn-back:hover {
+    color: var(--text);
+    border-color: var(--glass-border);
+    transform: translateX(-5px);
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: var(--text);
+    color: var(--bg);
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(49, 108, 211, 0.3);
+}
+
+@media (max-width: 768px) {
+    .project-title {
+        font-size: 2rem;
+    }
+    
+    .project-subtitle {
+        font-size: 1rem;
+    }
+    
+    .project-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-back, .btn-primary {
+        justify-content: center;
+    }
+}

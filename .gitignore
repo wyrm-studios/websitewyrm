@@ -1,50 +1,50 @@
-```gitignore
+```
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
+*.class
+*.exe
+*.dll
+*.so
+*.a
+*.out
+
 # Dependencies
 node_modules/
-
-# Logs and temp files
-*.log
-*.tmp
-*.swp
-
-# Environment
+venv/
+.venv/
 .env
 .env.local
-*.env.*
+.env.*
+
+# Build directories
+dist/
+build/
+target/
+.gradle/
+
+# Python specific
+.mypy_cache/
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
 
 # Editors
 .vscode/
 .idea/
+*.swp
+*.swo
+*.tmp
 
-# Coverage reports
-coverage/
-htmlcov/
-*.coverage
+# System files
+.DS_Store
+Thumbs.db
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-pip-log.txt
-pip-selfcheck.json
-.pytest_cache/
-.mypy_cache/
-.coverage
-
-# Build artifacts
-dist/
-build/
-*.egg-info/
-*.so
-*.dylib
-*.dll
-*.exe
-*.out
+# Logs
+*.log
 
 # Compressed files
 *.zip
@@ -69,14 +69,4 @@ build/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
-
-# System files
-.DS_Store
-Thumbs.db
-```
-
-Wait, I need to reconsider. The only modified files are `script.js` and `style.css`, which are source code files. There are no build artifacts, dependency directories, or temporary files in the changes provided. According to rule #6, if the changes contain only source or config files and no build artifacts, dependencies, or temp files, I should output an empty .gitignore.
-
-```gitignore
-
 ```
