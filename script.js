@@ -222,10 +222,12 @@ function initFilter() {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const val = btn.getAttribute('data-filter');
-            projects.forEach(card => {
+            
+            projects.forEach((card, index) => {
                 const cat = card.getAttribute('data-category');
                 if (val === 'all' || cat === val) {
                     card.classList.remove('hidden');
+                    card.style.setProperty('--animation-delay', `${index * 0.05}s`);
                     card.classList.add('show');
                 } else {
                     card.classList.add('hidden');
@@ -245,7 +247,9 @@ function initProjectDetail() {
     if (!overlay) return;
 
     cards.forEach(card => {
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
+            
             const title = card.getAttribute('data-title');
             const desc = card.getAttribute('data-desc');
             const year = card.getAttribute('data-year');
@@ -253,20 +257,28 @@ function initProjectDetail() {
             const bg = card.getAttribute('data-bg');
             const category = card.getAttribute('data-category');
 
-            document.getElementById('projectDetailTitle').textContent = title;
-            document.getElementById('projectDetailDesc').textContent = desc;
-            document.getElementById('projectDetailYear').textContent = year;
-            document.getElementById('projectDetailTag').textContent = category.charAt(0).toUpperCase() + category.slice(1);
-            document.getElementById('projectDetailImage').style.background = bg;
-
+            const detailTitle = document.getElementById('projectDetailTitle');
+            const detailDesc = document.getElementById('projectDetailDesc');
+            const detailYear = document.getElementById('projectDetailYear');
+            const detailTag = document.getElementById('projectDetailTag');
+            const detailImage = document.getElementById('projectDetailImage');
             const tagsContainer = document.getElementById('projectDetailTags');
-            tagsContainer.innerHTML = '';
-            tags.split(',').forEach(tag => {
-                const pill = document.createElement('span');
-                pill.className = 'project-detail-pill';
-                pill.textContent = tag.trim();
-                tagsContainer.appendChild(pill);
-            });
+
+            if (detailTitle) detailTitle.textContent = title;
+            if (detailDesc) detailDesc.textContent = desc;
+            if (detailYear) detailYear.textContent = year;
+            if (detailTag) detailTag.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            if (detailImage) detailImage.style.background = bg;
+
+            if (tagsContainer && tags) {
+                tagsContainer.innerHTML = '';
+                tags.split(',').forEach(tag => {
+                    const pill = document.createElement('span');
+                    pill.className = 'project-detail-pill';
+                    pill.textContent = tag.trim();
+                    tagsContainer.appendChild(pill);
+                });
+            }
 
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
