@@ -15,9 +15,9 @@ const state = {
 
 let els = {};
 let modelViewer = null;
+let vimeoPlayer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 DOM Loaded - Initializing...');
     cacheElements();
     loadTheme();
     initNav();
@@ -25,10 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initSiri();
     initTheme();
     initFilter();
-    initVideoPlayer();
+    initVimeoPlayer();
     initModal();
     init3DModel();
-    console.log('✅ Initialization complete');
 });
 
 function cacheElements() {
@@ -54,21 +53,13 @@ function cacheElements() {
         formSuccess: document.getElementById('formSuccess'),
         closeSuccess: document.getElementById('closeSuccess')
     };
-    
-    console.log('📦 Elements cached:', {
-        filterBtns: els.filterBtns.length,
-        projects: els.projects.length
-    });
 }
 
 function initNav() {
-    console.log('🧭 Initializing navigation...');
-    
     els.navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const pageId = link.getAttribute('data-page');
-            console.log('📍 Nav clicked:', pageId);
             if (pageId) switchPage(pageId);
         });
     });
@@ -86,7 +77,6 @@ function initNav() {
 }
 
 function switchPage(pageId) {
-    console.log('🔄 Switching to page:', pageId);
     const currentPage = document.querySelector('.page.active');
     const targetPage = document.getElementById(pageId);
     
@@ -173,24 +163,19 @@ function loadTheme() {
     }
 }
 
-function initVideoPlayer() {
-    const video = document.getElementById('introVideo');
-    const playButton = document.getElementById('playButton');
-    
-    if (!video || !playButton) return;
-    
-    playButton.addEventListener('click', () => {
-        if (video.paused) {
-            video.play();
-            playButton.style.opacity = '0';
-        } else {
-            video.pause();
-            playButton.style.opacity = '1';
-        }
-    });
-    
-    video.addEventListener('play', () => { playButton.style.opacity = '0'; });
-    video.addEventListener('pause', () => { playButton.style.opacity = '1'; });
+function initVimeoPlayer() {
+    const iframe = document.querySelector('#vimeoVideo');
+    if (iframe) {
+        vimeoPlayer = new Vimeo.Player(iframe);
+        
+        vimeoPlayer.on('loaded', () => {
+            console.log('Vimeo video loaded');
+        });
+        
+        vimeoPlayer.on('error', (error) => {
+            console.error('Vimeo player error:', error);
+        });
+    }
 }
 
 function initSiri() {
@@ -227,39 +212,21 @@ function showSiriMessage() {
 }
 
 function initFilter() {
-    console.log('🔍 Initializing filter...');
-    console.log('Filter buttons found:', els.filterBtns.length);
-    console.log('Projects found:', els.projects.length);
-    
-    if (!els.filterBtns.length || !els.projects.length) {
-        console.error('❌ Filter elements not found!');
-        return;
-    }
+    if (!els.filterBtns || !els.projects) return;
     
     els.filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            console.log(' Filter button clicked');
-            
-            // Remove active class from all buttons
-            els.filterBtns.forEach(b => {
-                b.classList.remove('active');
-            });
-            
-            // Add active class to clicked button
+            els.filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
             const filterValue = btn.getAttribute('data-filter');
-            console.log('Filter value:', filterValue);
             
-            // Filter projects
             els.projects.forEach(project => {
                 const category = project.getAttribute('data-category');
-                console.log('Project category:', category);
                 
                 if (filterValue === 'all' || category === filterValue) {
                     project.classList.remove('hidden');
                     project.classList.add('show');
-                    // Trigger reflow for animation
                     void project.offsetWidth;
                     project.style.animation = 'none';
                     setTimeout(() => {
@@ -272,8 +239,6 @@ function initFilter() {
             });
         });
     });
-    
-    console.log('✅ Filter initialized successfully');
 }
 
 function toggleAccordion(element) {
