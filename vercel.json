@@ -4,26 +4,32 @@
     {
       "src": "index.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "src/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/src/(.*)",
-      "dest": "/src/$1",
-      "headers": {
-        "cache-control": "public, max-age=0, must-revalidate"
-      }
+      "dest": "/src/$1"
     },
     {
       "src": "/public/(.*)",
-      "dest": "/public/$1",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      }
+      "dest": "/public/$1"
+    },
+    {
+      "src": "/.*\\.(glb|mp4|png|jpg|jpeg|svg|webp)$",
+      "dest": "/$0"
     },
     {
       "src": "/(.*)",
-      "dest": "/$1"
+      "dest": "/index.html"
     }
   ]
 }
