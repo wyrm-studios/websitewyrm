@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- FIX 1: CSS path changed from src/style.css to style.css (root-level) -->
     <link rel="stylesheet" href="style.css">
 
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
@@ -25,7 +24,6 @@
         </div>
         
         <div class="nav-center">
-            <!-- FIX 5: Logo URL encoded properly (space → %20), and added larger height in style -->
             <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" 
                  alt="WYRM.STUDIOS" 
                  class="logo-img desktop-logo" 
@@ -78,7 +76,6 @@
         <section id="home" class="page active">
             <div class="video-container">
                 <div class="video-wrapper">
-                    <!-- FIX 2: muted=1 added so autoplay works in all browsers -->
                     <iframe id="vimeoVideo" 
                             src="https://player.vimeo.com/video/1190794803?autoplay=1&muted=1&loop=1&byline=0&title=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=1" 
                             width="100%" 
@@ -103,7 +100,6 @@
                     <button class="filter-btn" data-filter="video">Video Editing</button>
                 </div>
                 <div class="projects-grid">
-                    <!-- FIX 3: Project card images replaced with CSS gradient placeholders.
                          Upload your actual images to /public/assets/work/ on GitHub,
                          then replace the background-color with background-image: url('public/assets/work/your-image.jpg') -->
                     <div class="project-card" data-category="motion">
@@ -145,7 +141,6 @@
         <section id="about" class="page">
             <div class="about-wrapper">
                 <div class="about-model-area">
-                    <!-- FIX 4: GLB src now points to GitHub raw URL so Vercel can load it.
                          Make sure retro_computer_setup_free.glb is committed to your repo root on GitHub. -->
                     <model-viewer 
                         id="aboutModel"
@@ -308,7 +303,6 @@
         </div>
     </div>
 
-    <!-- FIX 1: JS path changed from src/script.js to script.js (root-level) -->
     <script src="script.js"></script>
 </body>
 </html>
