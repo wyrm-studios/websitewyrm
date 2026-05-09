@@ -124,7 +124,7 @@ body {
 }
 
 .logo-img {
-    height: 28px;
+    height: 48px;
     width: auto;
 }
 
@@ -258,7 +258,7 @@ body {
 }
 
 .mobile-logo {
-    height: 24px;
+    height: 36px;
     width: auto;
 }
 
@@ -374,7 +374,7 @@ main {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-.intro-video {
+#vimeoVideo {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -403,17 +403,6 @@ main {
 .play-button:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translate(-50%, -50%) scale(1.1);
-}
-
-.video-controls {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: var(--text);
-    font-size: 1.5rem;
-    letter-spacing: 5px;
-    opacity: 0.6;
 }
 
 .portfolio-container {
@@ -1118,7 +1107,6 @@ main {
     .siri-mascot { width: 90px; height: 90px; }
     .portfolio-container { padding: 6rem 1rem 3rem; }
     .video-wrapper { aspect-ratio: 16/9; }
-    .play-button { width: 60px; height: 60px; }
 }
 
 @media (max-width: 480px) {
