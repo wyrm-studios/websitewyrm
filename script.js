@@ -17,10 +17,7 @@ let els = {};
 let modelViewer = null;
 let introAudio = null;
 let subtitleTimeouts = [];
-let siriInteractionState = 0; // 0: default, 1: annoyed, 2: leave me alone
-let siriResetTimer = null;
 
-// Subtitle timing data (in milliseconds)
 const subtitles = [
   { time: 0, text: "Hello there, stranger. " },
   { time: 2000, text: "If you're reading this, you've found your way here. " },
@@ -77,7 +74,6 @@ function cacheElements() {
   };
 }
 
-// ================= AUDIO INTRO =================
 function initAudioIntro() {
   introAudio = document.getElementById('introAudio');
   if (els.playIntroBtn && introAudio) {
@@ -134,7 +130,6 @@ function resetIntroUI() {
   subtitleTimeouts = [];
 }
 
-// ================= NAVIGATION =================
 function initNav() {
   els.navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -167,17 +162,29 @@ function switchPage(pageId) {
   }
 
   setTimeout(() => {
-    if (currentPage) currentPage.classList.remove('active');
+    if (currentPage) {
+      currentPage.classList.remove('active');
+      currentPage.style.transform = 'translateY(20px)';
+    }
+    
     targetPage.classList.add('active');
     void targetPage.offsetWidth;
     targetPage.style.opacity = '1';
     targetPage.style.transform = 'translateY(0)';
-
-    if (pageId !== 'about') disable3DModel();
-    if (pageId === 'about') setTimeout(enable3DModel, 500);
+    
+    if (pageId !== 'about' && modelViewer) {
+      disable3DModel();
+    }
+    if (pageId === 'about') {
+      setTimeout(enable3DModel, 500);
+    }
   }, 600);
 
-  document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.toggle('active', link.getAttribute('data-page') === pageId);
+  });
+
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
     link.classList.toggle('active', link.getAttribute('data-page') === pageId);
   });
 }
@@ -188,9 +195,9 @@ function initMobileNav() {
   els.closeMobilePanel.addEventListener('click', closeMobilePanel);
 
   document.addEventListener('click', (e) => {
-    if (els.mobilePanel.classList.contains('open') &&
-      !els.mobilePanel.contains(e.target) &&
-      !els.openMobilePanel.contains(e.target)) {
+    if (els.mobilePanel.classList.contains('open') && 
+        !els.mobilePanel.contains(e.target) && 
+        !els.openMobilePanel.contains(e.target)) {
       closeMobilePanel();
     }
   });
@@ -206,7 +213,6 @@ function closeMobilePanel() {
   document.body.style.overflow = '';
 }
 
-// ================= THEME =================
 function initTheme() {
   if (!els.themeToggle) return;
   els.themeToggle.addEventListener('click', () => {
@@ -222,15 +228,16 @@ function loadTheme() {
   if (saved) {
     state.theme = saved;
     document.documentElement.setAttribute('data-theme', saved);
+    updateLogo(saved);
+  } else {
+    updateLogo('dark');
   }
-  updateLogo(state.theme);
 }
 
 function updateLogo(theme) {
   const logos = document.querySelectorAll('.logo-img');
   const whiteLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png';
   const blackLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/black%20logo%20png.png';
-
   logos.forEach(logo => {
     logo.style.opacity = '0';
     setTimeout(() => {
@@ -240,12 +247,11 @@ function updateLogo(theme) {
   });
 }
 
-// ================= VIDEO PLAYER =================
 function initVideoPlayer() {
   const video = document.getElementById('introVideo');
   const playButton = document.getElementById('playButton');
   if (!video || !playButton) return;
-
+  
   playButton.addEventListener('click', () => {
     if (video.paused) {
       video.play();
@@ -256,87 +262,43 @@ function initVideoPlayer() {
     }
   });
 
-  video.addEventListener('play', () => playButton.style.opacity = '0');
-  video.addEventListener('pause', () => playButton.style.opacity = '1');
+  video.addEventListener('play', () => { playButton.style.opacity = '0'; });
+  video.addEventListener('pause', () => { playButton.style.opacity = '1'; });
 }
 
-// ================= SIRI MASCOT =================
 function initSiri() {
   if (!els.siriImg || !els.siriMascot) return;
-
-  // Generate correct filenames: Untitled-10001.png to Untitled-10080.png
+  
   const frameUrls = [];
   for (let i = 1; i <= 80; i++) {
-    const num = 10000 + i; // Creates: 10001, 10002, ... 10080
+    const num = 10000 + i;
     const url = `public/assets/siri/Untitled-${num}.png`;
     frameUrls.push(url);
   }
 
-  // Preload frames
-  frameUrls.forEach(url => {
-    const img = new Image();
+  frameUrls.forEach(url => { 
+    const img = new Image(); 
     img.src = url;
   });
 
-  // Start animation
   state.siriTimer = setInterval(() => {
     state.siriFrame = (state.siriFrame + 1) % frameUrls.length;
     els.siriImg.src = frameUrls[state.siriFrame];
   }, 100);
 
-  // Show messages periodically
   setInterval(() => showSiriMessage(), 10000);
 
-  // Click handler with interaction logic
-  els.siriMascot.addEventListener('click', () => {
-    if (siriInteractionState === 0) {
-      playHuhSound();
-      showSpecificMessage("what you want more from me");
-      siriInteractionState = 1;
-    } else if (siriInteractionState === 1) {
-      playHahhSound();
-      showSpecificMessage("leave me alone");
-      siriInteractionState = 2;
-    } else {
-      playHahhSound();
-      showSpecificMessage("leave me alone");
-    }
-
-    clearTimeout(siriResetTimer);
-    siriResetTimer = setTimeout(() => {
-      siriInteractionState = 0;
-    }, 5000);
-  });
-}
-
-function showSpecificMessage(text) {
-  if (!els.siriBubble) return;
-  els.siriBubble.textContent = text;
-  els.siriBubble.classList.add('show');
-  setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
+  els.siriMascot.addEventListener('click', showSiriMessage);
 }
 
 function showSiriMessage() {
-  if (!els.siriBubble || siriInteractionState !== 0) return;
+  if (!els.siriBubble) return;
   const msg = state.messages[Math.floor(Math.random() * state.messages.length)];
   els.siriBubble.textContent = msg;
   els.siriBubble.classList.add('show');
   setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
-function playHuhSound() {
-  const huhAudio = new Audio('public/assets/huh.MP3');
-  huhAudio.volume = 0.5;
-  huhAudio.play().catch(error => console.log('Audio playback failed:', error));
-}
-
-function playHahhSound() {
-  const hahhAudio = new Audio('public/assets/hahh.MP3');
-  hahhAudio.volume = 0.5;
-  hahhAudio.play().catch(error => console.log('Audio playback failed:', error));
-}
-
-// ================= FILTER =================
 function initFilter() {
   if (!els.filterBtns || !els.projects) return;
   els.filterBtns.forEach(btn => {
@@ -344,7 +306,7 @@ function initFilter() {
       els.filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const filterValue = btn.getAttribute('data-filter');
-
+      
       els.projects.forEach(project => {
         const category = project.getAttribute('data-category');
         if (filterValue === 'all' || category === filterValue) {
@@ -359,7 +321,6 @@ function initFilter() {
   });
 }
 
-// ================= ACCORDION =================
 function toggleAccordion(element) {
   const item = element.parentElement;
   const isActive = item.classList.contains('active');
@@ -367,10 +328,11 @@ function toggleAccordion(element) {
   if (!isActive) item.classList.add('active');
 }
 
-// ================= 3D MODEL =================
 function init3DModel() {
   modelViewer = document.getElementById('aboutModel');
-  if (modelViewer) disable3DModel();
+  if (modelViewer) {
+    disable3DModel();
+  }
 }
 
 function enable3DModel() {
@@ -389,20 +351,38 @@ function disable3DModel() {
   }
 }
 
-// ================= MODAL =================
 function initModal() {
-  const triggers = [els.openHireModal, els.openHireModalMobile, els.openHireModalContact].filter(Boolean);
-  triggers.forEach(btn => btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    openModal();
-  }));
-
-  els.closeHireModal?.addEventListener('click', closeModal);
-  els.closeSuccess?.addEventListener('click', () => { closeModal(); resetForm(); });
-  els.hireModal?.addEventListener('click', (e) => {
-    if (e.target === els.hireModal) { closeModal(); resetForm(); }
+  const openTriggers = [els.openHireModal, els.openHireModalMobile, els.openHireModalContact].filter(Boolean);
+  openTriggers.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal();
+    });
   });
-  els.hireForm?.addEventListener('submit', handleFormSubmit);
+
+  if (els.closeHireModal) {
+    els.closeHireModal.addEventListener('click', closeModal);
+  }
+
+  if (els.closeSuccess) {
+    els.closeSuccess.addEventListener('click', () => {
+      closeModal();
+      resetForm();
+    });
+  }
+
+  if (els.hireModal) {
+    els.hireModal.addEventListener('click', (e) => {
+      if (e.target === els.hireModal) {
+        closeModal();
+        resetForm();
+      }
+    });
+  }
+
+  if (els.hireForm) {
+    els.hireForm.addEventListener('submit', handleFormSubmit);
+  }
 }
 
 function openModal() {
@@ -442,10 +422,13 @@ function handleFormSubmit(e) {
 
   const subject = `New Inquiry from ${formData.brandName}`;
   const body = `Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\nBudget: ${formData.budget}\nMessage: ${formData.message}`;
-
+  
   window.location.href = `mailto:contact.wyrmstudio@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-  els.hireForm.style.display = 'none';
-  els.formSuccess.classList.add('active');
+  if (els.hireForm && els.formSuccess) {
+    els.hireForm.style.display = 'none';
+    els.formSuccess.classList.add('active');
+  }
+
   console.log('Form submitted:', formData);
 }
