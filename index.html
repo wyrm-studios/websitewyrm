@@ -12,7 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
   
-  <!-- Link to Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -65,12 +64,15 @@
     <section id="home" class="page active">
       <div class="video-container">
         <div class="video-wrapper">
-          <video id="introVideo" muted playsinline poster="https://via.placeholder.com/1920x1080/1a1a2e/ffffff?text=Wyrm+Studios+Showreel">
-            <source src="assets/videos/showreel.mp4" type="video/mp4">
-          </video>
-          <button id="playButton" class="play-video-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          </button>
+          <!-- Vimeo Video Embed -->
+          <iframe src="https://player.vimeo.com/video/1190794803?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" 
+                  width="1920" 
+                  height="1080" 
+                  frameborder="0" 
+                  allow="autoplay; fullscreen; picture-in-picture" 
+                  allowfullscreen
+                  title="Wyrm Studios Showreel">
+          </iframe>
         </div>
       </div>
     </section>
@@ -79,7 +81,17 @@
     <section id="about" class="page">
       <div class="about-wrapper">
         <div class="about-model-area">
-          <model-viewer id="aboutModel" class="model-3d-about" src="assets/models/wyrm-mascot.glb" alt="3D Wyrm Mascot" camera-controls auto-rotate shadow-intensity="1" exposure="1" environment-image="neutral"></model-viewer>
+          <!-- 3D Model - Fixed Path -->
+          <model-viewer id="aboutModel" 
+                        class="model-3d-about" 
+                        src="retro_computer_setup_free.glb" 
+                        alt="3D Retro Computer Setup" 
+                        camera-controls 
+                        auto-rotate 
+                        shadow-intensity="1" 
+                        exposure="1" 
+                        environment-image="neutral">
+          </model-viewer>
         </div>
         
         <div class="about-glass-card">
@@ -271,13 +283,9 @@
   <div class="siri-container">
     <div id="siriBubble" class="siri-bubble"></div>
     <div id="siriMascot" class="siri-mascot">
-      <!-- FIXED: Correct Filename for 1st frame -->
       <img id="siriImg" src="public/assets/siri/Untitled-10001.png" alt="Wyrm Assistant">
     </div>
   </div>
-
-  <!-- INTRO AUDIO -->
-  <audio id="introAudio" src="assets/audio/intro.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
