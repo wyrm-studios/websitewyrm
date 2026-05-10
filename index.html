@@ -20,11 +20,7 @@
         </div>
         
         <div class="nav-center">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" 
-                 alt="WYRM.STUDIOS" 
-                 class="logo-img desktop-logo" 
-                 id="desktopLogo"
-                 onerror="this.style.display='none'">
+            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="logo-img desktop-logo" onerror="this.style.display='none'">
             <span class="logo-text">WYRM.STUDIOS®</span>
         </div>
         
@@ -42,11 +38,7 @@
 
     <div class="mobile-panel" id="mobilePanel">
         <div class="mobile-panel-header">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" 
-                 alt="WYRM.STUDIOS" 
-                 class="mobile-logo" 
-                 id="mobileLogo"
-                 onerror="this.style.display='none'">
+            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="mobile-logo" onerror="this.style.display='none'">
             <button class="mobile-close-btn" id="closeMobilePanel" aria-label="Close menu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
@@ -107,6 +99,14 @@
                         <h1 class="about-name">Omar</h1>
                         <p class="about-title">Creative Director & Motion Designer</p>
                         <p class="about-subtitle">I help ambitious brands turn complex ideas into clear, memorable visuals.</p>
+                    </div>
+
+                    <div class="audio-intro-section">
+                        <button id="playIntroBtn" class="play-intro-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            <span>Listen to Introduction</span>
+                        </button>
+                        <div id="subtitleContainer" class="subtitle-container"></div>
                     </div>
 
                     <div class="accordion-container">
@@ -170,6 +170,10 @@
             </div>
         </section>
     </main>
+
+    <audio id="introAudio" preload="auto">
+        <source src="aboutme.wav" type="audio/wav">
+    </audio>
 
     <div class="modal-overlay" id="hireModal">
         <div class="modal-content">
