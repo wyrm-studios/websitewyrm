@@ -1460,3 +1460,47 @@ main {
     transition-duration: 0.01ms !important;
   }
 }
+/* Mobile Home Description - Hidden on Desktop */
+.mobile-home-desc {
+  display: none;
+  text-align: center;
+  padding: 2rem 1.5rem 0.5rem;
+  color: var(--text);
+}
+
+.mobile-home-desc h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.mobile-home-desc p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-bottom: 0.5rem;
+}
+
+.mobile-home-desc .desc-text {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Show only on Mobile */
+@media (max-width: 768px) {
+  .mobile-home-desc {
+    display: block;
+  }
+  
+  /* Adjust video container so it doesn't have too much empty space */
+  .video-container {
+    padding-top: 6rem; /* Keep top padding for nav */
+    padding-bottom: 1rem; /* Less bottom padding */
+    min-height: auto; /* Allow height to grow with text */
+  }
+}
