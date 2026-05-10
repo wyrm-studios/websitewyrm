@@ -1010,3 +1010,233 @@ main {
   .about-glass-card { padding: 2rem 1.5rem; }
   .about-name { font-size: 2rem; }
 }
+/* Project Detail Page Styles */
+.project-detail {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.project-back-nav {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.8rem;
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  transform: translateX(-5px);
+}
+
+.project-hero {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem 4rem;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--accent-navy) 100%);
+}
+
+.project-hero-content {
+  max-width: 1000px;
+  text-align: center;
+}
+
+.project-hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: -3px;
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.project-hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--text-dim);
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+.project-hero-tags {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.project-tag {
+  padding: 0.6rem 1.5rem;
+  background: rgba(49, 108, 211, 0.15);
+  border: 1px solid rgba(49, 108, 211, 0.3);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  color: var(--accent-blue);
+  font-weight: 500;
+}
+
+.project-section {
+  padding: 6rem 2rem;
+}
+
+.project-section-dark {
+  background: rgba(26, 26, 26, 0.5);
+}
+
+.project-section-light {
+  background: var(--bg);
+}
+
+.project-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.project-section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: -1px;
+}
+
+.project-section-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-dim);
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.project-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.project-showcase-item {
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, rgba(49, 108, 211, 0.1) 0%, rgba(31, 44, 91, 0.1) 100%);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-showcase-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-resources {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+}
+
+.resource-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: var(--accent-blue);
+  color: #F5F5F5;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.resource-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(49, 108, 211, 0.3);
+}
+
+.project-cta {
+  text-align: center;
+  padding: 6rem 2rem;
+  background: linear-gradient(180deg, var(--accent-navy) 0%, var(--accent-blue) 100%);
+}
+
+.project-cta-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.project-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.2rem 3rem;
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.project-cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .project-hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .project-hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .project-section-title {
+    font-size: 2rem;
+  }
+  
+  .project-resources {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .resource-btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+}
