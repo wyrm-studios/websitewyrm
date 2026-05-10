@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1A1A1A">
     <title>WYRM.STUDIOS®</title>
     <meta name="description" content="Premium visuals, branding & motion design">
@@ -14,226 +14,127 @@
 <body>
     <div class="bg-gradient"></div>
 
-    <nav class="nav-pill desktop-nav">
+    <!-- Navigation -->
+    <nav class="nav-pill">
         <div class="nav-left">
             <a href="#" class="nav-link active" data-page="home">Home</a>
         </div>
         
         <div class="nav-center">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="logo-img desktop-logo" onerror="this.style.display='none'">
-            <span class="logo-text">WYRM.STUDIOS®</span>
+            <img id="logoImg" src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="logo-img">
         </div>
         
         <div class="nav-right">
             <a href="#" class="nav-link" data-page="about">About</a>
-            
             <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
-                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
-            
-            <button class="nav-cta-btn" id="openHireModal">Hire Us</button>
+            <button class="nav-cta-btn" onclick="openModal()">Hire Us</button>
         </div>
     </nav>
 
+    <!-- Mobile Menu -->
+    <button class="mobile-hamburger" id="mobileMenuBtn">
+        <span></span><span></span><span></span>
+    </button>
+
     <div class="mobile-panel" id="mobilePanel">
         <div class="mobile-panel-header">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="mobile-logo" onerror="this.style.display='none'">
-            <button class="mobile-close-btn" id="closeMobilePanel" aria-label="Close menu">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
+            <img id="mobileLogoImg" src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="mobile-logo">
+            <button class="mobile-close-btn" id="closeMobileMenu">✕</button>
         </div>
         <div class="mobile-nav-links">
-            <a href="#" class="mobile-nav-link" data-page="home">Home</a>
+            <a href="#" class="mobile-nav-link active" data-page="home">Home</a>
             <a href="#" class="mobile-nav-link" data-page="about">About</a>
-            <button class="mobile-cta-btn" id="openHireModalMobile">Hire Us</button>
-        </div>
-        <div class="mobile-footer">
-            <p>© 2026 WYRM.STUDIOS®</p>
+            <button class="mobile-cta-btn" onclick="openModal()">Hire Us</button>
         </div>
     </div>
 
-    <button class="mobile-hamburger" id="openMobilePanel" aria-label="Open menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-    </button>
-
+    <!-- Main Content -->
     <main>
+        <!-- Home Page -->
         <section id="home" class="page active">
             <div class="video-container">
                 <div class="video-wrapper">
-                    <iframe id="vimeoVideo" 
-                            src="https://player.vimeo.com/video/1190794803?autoplay=1&muted=0&loop=1&byline=0&title=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=1" 
-                            width="100%" 
-                            height="100%" 
-                            frameborder="0" 
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                            referrerpolicy="strict-origin-when-cross-origin" 
-                            title="WYRM Showreel"
-                            allowfullscreen>
-                    </iframe>
+                    <iframe src="https://player.vimeo.com/video/1190794803?autoplay=1&muted=0&loop=1&byline=0&title=0&portrait=0&controls=0" 
+                            frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
                 </div>
             </div>
         </section>
 
+        <!-- About Page -->
         <section id="about" class="page">
             <div class="about-wrapper">
                 <div class="about-model-area">
-                    <model-viewer 
-                        id="aboutModel"
-                        src="./retro_computer_setup_free.glb" 
-                        alt="3D Retro Computer Setup"
-                        auto-rotate 
-                        camera-controls 
-                        shadow-intensity="1"
-                        class="model-3d-about"
-                        exposure="1"
-                        environment-image="neutral"
-                        interaction-prompt="none">
-                    </model-viewer>
+                    <model-viewer id="aboutModel" src="./retro_computer_setup_free.glb" auto-rotate camera-controls shadow-intensity="1" class="model-3d-about"></model-viewer>
                 </div>
-
                 <div class="about-glass-card">
-                    <div class="about-header">
-                        <h1 class="about-name">Omar</h1>
-                        <p class="about-title">Creative Director & Motion Designer</p>
-                        <p class="about-subtitle">I help ambitious brands turn complex ideas into clear, memorable visuals.</p>
-                    </div>
-
-                    <div class="accordion-container">
+                    <h1 class="about-name">Omar</h1>
+                    <p class="about-title">Creative Director & Motion Designer</p>
+                    <p class="about-subtitle">I help ambitious brands turn complex ideas into clear, memorable visuals.</p>
+                    
+                    <div class="accordion">
                         <div class="accordion-item">
                             <button class="accordion-header" onclick="toggleAccordion(this)">
-                                <span>Who I Am</span>
-                                <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                <span>Who I Am</span><span class="accordion-icon">▼</span>
                             </button>
                             <div class="accordion-content">
-                                <p>Based in Tunisia, I'm a passionate creative with over 5 years of experience in visual storytelling. I specialize in creating cinematic brand films and digital experiences that resonate with audiences.</p>
+                                <p>Based in Tunisia, I'm a passionate creative with over 5 years of experience in visual storytelling. I specialize in creating cinematic brand films and digital experiences.</p>
                             </div>
                         </div>
-
                         <div class="accordion-item">
                             <button class="accordion-header" onclick="toggleAccordion(this)">
-                                <span>What I Do</span>
-                                <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                <span>What I Do</span><span class="accordion-icon">▼</span>
                             </button>
                             <div class="accordion-content">
-                                <p>I craft cinematic brand films, motion graphics, and visual identities. From concept to execution, I work with founders and brands who want to make a lasting impression.</p>
+                                <p>I craft cinematic brand films, motion graphics, and visual identities. From concept to execution, I work with founders who want to make a lasting impression.</p>
                             </div>
                         </div>
-
                         <div class="accordion-item">
                             <button class="accordion-header" onclick="toggleAccordion(this)">
-                                <span>My Approach</span>
-                                <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                <span>My Approach</span><span class="accordion-icon">▼</span>
                             </button>
                             <div class="accordion-content">
-                                <p>I believe in simplicity and clarity. Every project starts with understanding your vision, then transforming it into visuals that not only look stunning but serve a strategic purpose.</p>
+                                <p>I believe in simplicity and clarity. Every project starts with understanding your vision, then transforming it into visuals that serve a strategic purpose.</p>
                             </div>
-                        </div>
-
-                        <div class="accordion-item">
-                            <button class="accordion-header" onclick="toggleAccordion(this)">
-                                <span>Beyond Work</span>
-                                <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </button>
-                            <div class="accordion-content">
-                                <p>When I'm not designing, you'll find me exploring new creative tools, experimenting with 3D art, or studying the latest trends in motion design.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="about-footer">
-                        <p>© 2026 WYRM.STUDIOS®. All rights reserved.</p>
-                        <div class="footer-links">
-                            <a href="#" class="footer-link">Terms</a>
-                            <a href="#" class="footer-link">Privacy</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="page">
-            <div class="center-container">
-                <h2 class="section-title">Let's Work</h2>
-                <p class="contact-text">contact@wyrmstudios.com</p>
-                <button class="minimal-btn" id="openHireModalContact">Start a Project</button>
-            </div>
+        <!-- Contact Section -->
+        <section class="center-container">
+            <h2 class="section-title">Let's Work</h2>
+            <p class="contact-text">contact@wyrmstudios.com</p>
+            <button class="minimal-btn" onclick="openModal()">Start a Project</button>
         </section>
     </main>
 
+    <!-- Hire Modal -->
     <div class="modal-overlay" id="hireModal">
         <div class="modal-content">
-            <button class="modal-close" id="closeHireModal" aria-label="Close form">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-            
-            <div class="modal-header">
-                <h2>Let's Build Something Great</h2>
-                <p>Tell us about your project and we'll get back to you within 24 hours.</p>
-            </div>
-
-            <form id="hireForm" class="hire-form">
-                <div class="form-group">
-                    <label for="brandName">Brand / Company Name *</label>
-                    <input type="text" id="brandName" name="brandName" required placeholder="e.g., NIKE, APPLE, TechStart">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">Your Name *</label>
-                        <input type="text" id="name" name="name" required placeholder="John Doe">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" required placeholder="john@company.com">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="service">Service Needed *</label>
-                    <select id="service" name="service" required>
-                        <option value="">Select a service</option>
-                        <option value="branding">Branding & Identity</option>
-                        <option value="web">Web Design</option>
-                        <option value="motion">Motion Design</option>
-                        <option value="video">Video Editing</option>
-                        <option value="full">Full Package</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="budget">Budget Range *</label>
-                    <select id="budget" name="budget" required>
-                        <option value="">Select budget</option>
-                        <option value="1k-3k">$1,000 - $3,000</option>
-                        <option value="3k-7k">$3,000 - $7,000</option>
-                        <option value="7k-15k">$7,000 - $15,000</option>
-                        <option value="15k+">$15,000+</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Project Details *</label>
-                    <textarea id="message" name="message" rows="4" required placeholder="Tell us about your vision, timeline, and goals..."></textarea>
-                </div>
-
-                <button type="submit" class="modal-submit-btn">
-                    Send Inquiry
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </button>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <h2>Let's Build Something Great</h2>
+            <form class="hire-form" onsubmit="handleFormSubmit(event)">
+                <input type="text" placeholder="Brand Name" required>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Email" required>
+                <select required>
+                    <option value="">Select Service</option>
+                    <option value="branding">Branding</option>
+                    <option value="web">Web Design</option>
+                    <option value="motion">Motion Design</option>
+                    <option value="video">Video Editing</option>
+                </select>
+                <textarea placeholder="Tell us about your project..." rows="4" required></textarea>
+                <button type="submit" class="modal-submit-btn">Send Inquiry</button>
             </form>
-
-            <div class="form-success" id="formSuccess">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#316CD3" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <h3>Thank You!</h3>
-                <p>We've received your inquiry and will respond within 24 hours.</p>
-                <button class="modal-close-btn" id="closeSuccess">Close</button>
-            </div>
         </div>
     </div>
 
+    <!-- Siri Mascot -->
     <div class="siri-container">
         <div class="siri-bubble" id="siriBubble"></div>
         <div class="siri-mascot" id="siriMascot">
