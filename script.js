@@ -264,7 +264,7 @@ function initVideoPlayer() {
 function initSiri() {
   if (!els.siriImg || !els.siriMascot) return;
 
-  // ✅ FIXED: Generate correct filenames (Untitled-10001.png to Untitled-10080.png)
+  // Generate correct filenames: Untitled-10001.png to Untitled-10080.png
   const frameUrls = [];
   for (let i = 1; i <= 80; i++) {
     const num = 10000 + i; // Creates: 10001, 10002, ... 10080
@@ -287,25 +287,21 @@ function initSiri() {
   // Show messages periodically
   setInterval(() => showSiriMessage(), 10000);
 
-  // ✅ CLICK HANDLER WITH INTERACTION LOGIC
+  // Click handler with interaction logic
   els.siriMascot.addEventListener('click', () => {
     if (siriInteractionState === 0) {
-      // First click: "Huh?"
       playHuhSound();
       showSpecificMessage("what you want more from me");
       siriInteractionState = 1;
     } else if (siriInteractionState === 1) {
-      // Second click: "Hahh!"
       playHahhSound();
       showSpecificMessage("leave me alone");
       siriInteractionState = 2;
     } else {
-      // If they keep clicking, keep saying "leave me alone"
       playHahhSound();
       showSpecificMessage("leave me alone");
     }
 
-    // Reset state after 5 seconds of inactivity so he becomes nice again
     clearTimeout(siriResetTimer);
     siriResetTimer = setTimeout(() => {
       siriInteractionState = 0;
@@ -320,23 +316,20 @@ function showSpecificMessage(text) {
   setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
-// Standard random message
 function showSiriMessage() {
-  if (!els.siriBubble || siriInteractionState !== 0) return; // Don't show random messages if he's annoyed
+  if (!els.siriBubble || siriInteractionState !== 0) return;
   const msg = state.messages[Math.floor(Math.random() * state.messages.length)];
   els.siriBubble.textContent = msg;
   els.siriBubble.classList.add('show');
   setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
-// ✅ NEW FUNCTION: Play huh.MP3
 function playHuhSound() {
   const huhAudio = new Audio('public/assets/huh.MP3');
   huhAudio.volume = 0.5;
   huhAudio.play().catch(error => console.log('Audio playback failed:', error));
 }
 
-// ✅ NEW FUNCTION: Play hahh.MP3
 function playHahhSound() {
   const hahhAudio = new Audio('public/assets/hahh.MP3');
   hahhAudio.volume = 0.5;
