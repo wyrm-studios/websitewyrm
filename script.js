@@ -17,22 +17,21 @@ let els = {};
 let modelViewer = null;
 let introAudio = null;
 let subtitleTimeouts = [];
-let siriInteractionState = 0;
-let siriResetTimer = null;
 
+// Subtitle timing data (in milliseconds) - Adjusted for smooth sync
 const subtitles = [
-  { time: 0, text: "Hello there, stranger. " },
-  { time: 2000, text: "If you're reading this, you've found your way here. " },
-  { time: 5000, text: "Maybe it was luck. Maybe curiosity. " },
-  { time: 8000, text: "Or maybe you're here because you actually need something built. " },
-  { time: 10000, text: "However you arrived, stay a while. " },
-  { time: 15500, text: "Look around. I hope you enjoy what you find. " },
-  { time: 20000, text: "I'm Wyrm. This is wyrm.studio. " },
-  { time: 22500, text: "I make brands people remember. " },
-  { time: 26000, text: "Not just visuals. Not just videos. " },
-  { time: 29500, text: "I build complete identity systems: " },
-  { time: 44000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design " },
-  { time: 50000, text: "Take your time. The good stuff is right here. " }
+  { time: 0, text: "Hello there, stranger." },
+  { time: 2500, text: "If you're reading this, you've found your way here." },
+  { time: 5500, text: "Maybe it was luck. Maybe curiosity." },
+  { time: 8500, text: "Or maybe you're here because you actually need something built." },
+  { time: 12000, text: "However you arrived, stay a while." },
+  { time: 15000, text: "Look around. I hope you enjoy what you find." },
+  { time: 19000, text: "I'm Wyrm. This is wyrm.studio." },
+  { time: 22500, text: "I make brands people remember." },
+  { time: 26000, text: "Not just visuals. Not just videos." },
+  { time: 29500, text: "I build complete identity systems:" },
+  { time: 33000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
+  { time: 40000, text: "Take your time. The good stuff is right here." }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -80,6 +79,11 @@ function initAudioIntro() {
   introAudio = document.getElementById('introAudio');
   if (els.playIntroBtn && introAudio) {
     els.playIntroBtn.addEventListener('click', toggleAudioIntro);
+    
+    // When audio ends naturally
+    introAudio.addEventListener('ended', () => {
+      resetIntroUI();
+    });
   }
 }
 
@@ -87,6 +91,7 @@ function toggleAudioIntro() {
   if (!introAudio || !els.playIntroBtn || !els.subtitleContainer) return;
 
   if (introAudio.paused) {
+    // Play audio
     introAudio.play();
     els.playIntroBtn.classList.add('playing');
     els.playIntroBtn.innerHTML = `
@@ -94,25 +99,24 @@ function toggleAudioIntro() {
         <rect x="6" y="4" width="4" height="16"></rect>
         <rect x="14" y="4" width="4" height="16"></rect>
       </svg>
-      <span>Playing Introduction...</span>`;
+      <span>Playing Introduction...</span>
+    `;
     els.subtitleContainer.classList.add('show');
-
+    
+    // Clear any existing timeouts
     subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
     subtitleTimeouts = [];
-
+    
+    // Set up subtitle timing
     subtitles.forEach(subtitle => {
       const timeout = setTimeout(() => {
         els.subtitleContainer.innerHTML = `<div class="subtitle-text">${subtitle.text}</div>`;
       }, subtitle.time);
       subtitleTimeouts.push(timeout);
     });
-
-    const endTimeout = setTimeout(() => {
-      resetIntroUI();
-    }, 55000);
-    subtitleTimeouts.push(endTimeout);
-
+    
   } else {
+    // Pause audio
     introAudio.pause();
     resetIntroUI();
   }
@@ -120,6 +124,7 @@ function toggleAudioIntro() {
 
 function resetIntroUI() {
   if (!els.playIntroBtn || !els.subtitleContainer) return;
+  
   els.subtitleContainer.classList.remove('show');
   els.subtitleContainer.innerHTML = '';
   els.playIntroBtn.classList.remove('playing');
@@ -127,7 +132,10 @@ function resetIntroUI() {
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
       <polygon points="5 3 19 12 5 21 5 3"></polygon>
     </svg>
-    <span>Listen to Introduction</span>`;
+    <span>Listen to Introduction</span>
+  `;
+  
+  // Clear all timeouts
   subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
   subtitleTimeouts = [];
 }
@@ -273,8 +281,8 @@ function initSiri() {
   
   const frameUrls = [];
   for (let i = 1; i <= 80; i++) {
-    const num = 10000 + i;
-    const url = `public/assets/siri/Untitled-${num}.png`;
+    const num = i.toString().padStart(5, '0');
+    const url = `public/assets/siri/Untitled-1000${num}.png`;
     frameUrls.push(url);
   }
 
@@ -290,52 +298,15 @@ function initSiri() {
 
   setInterval(() => showSiriMessage(), 10000);
 
-  els.siriMascot.addEventListener('click', () => {
-    if (siriInteractionState === 0) {
-      playHuhSound();
-      showSpecificMessage("what you want more from me");
-      siriInteractionState = 1;
-    } else if (siriInteractionState === 1) {
-      playHahhSound();
-      showSpecificMessage("leave me alone");
-      siriInteractionState = 2;
-    } else {
-      playHahhSound();
-      showSpecificMessage("leave me alone");
-    }
-
-    clearTimeout(siriResetTimer);
-    siriResetTimer = setTimeout(() => {
-      siriInteractionState = 0;
-    }, 5000);
-  });
-}
-
-function showSpecificMessage(text) {
-  if (!els.siriBubble) return;
-  els.siriBubble.textContent = text;
-  els.siriBubble.classList.add('show');
-  setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
+  els.siriMascot.addEventListener('click', showSiriMessage);
 }
 
 function showSiriMessage() {
-  if (!els.siriBubble || siriInteractionState !== 0) return;
+  if (!els.siriBubble) return;
   const msg = state.messages[Math.floor(Math.random() * state.messages.length)];
   els.siriBubble.textContent = msg;
   els.siriBubble.classList.add('show');
   setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
-}
-
-function playHuhSound() {
-  const huhAudio = new Audio('public/assets/huh.MP3');
-  huhAudio.volume = 0.5;
-  huhAudio.play().catch(error => console.log('Audio playback failed:', error));
-}
-
-function playHahhSound() {
-  const hahhAudio = new Audio('public/assets/hahh.MP3');
-  hahhAudio.volume = 0.5;
-  hahhAudio.play().catch(error => console.log('Audio playback failed:', error));
 }
 
 function initFilter() {
