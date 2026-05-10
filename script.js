@@ -17,7 +17,10 @@ let els = {};
 let modelViewer = null;
 let introAudio = null;
 let subtitleTimeouts = [];
+let siriInteractionState = 0; // 0: default, 1: annoyed, 2: leave me alone
+let siriResetTimer = null;
 
+// Subtitle timing data (in milliseconds)
 const subtitles = [
   { time: 0, text: "Hello there, stranger. " },
   { time: 2000, text: "If you're reading this, you've found your way here. " },
@@ -74,6 +77,7 @@ function cacheElements() {
   };
 }
 
+// ================= AUDIO INTRO =================
 function initAudioIntro() {
   introAudio = document.getElementById('introAudio');
   if (els.playIntroBtn && introAudio) {
@@ -130,6 +134,7 @@ function resetIntroUI() {
   subtitleTimeouts = [];
 }
 
+// ================= NAVIGATION =================
 function initNav() {
   els.navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -201,6 +206,7 @@ function closeMobilePanel() {
   document.body.style.overflow = '';
 }
 
+// ================= THEME =================
 function initTheme() {
   if (!els.themeToggle) return;
   els.themeToggle.addEventListener('click', () => {
@@ -234,6 +240,7 @@ function updateLogo(theme) {
   });
 }
 
+// ================= VIDEO PLAYER =================
 function initVideoPlayer() {
   const video = document.getElementById('introVideo');
   const playButton = document.getElementById('playButton');
@@ -253,12 +260,12 @@ function initVideoPlayer() {
   video.addEventListener('pause', () => playButton.style.opacity = '1');
 }
 
-// ✅ FIXED SIRI ANIMATION
+// ================= SIRI MASCOT =================
 function initSiri() {
   if (!els.siriImg || !els.siriMascot) return;
 
+  // ✅ FIXED: Generate correct filenames (Untitled-10001.png to Untitled-10080.png)
   const frameUrls = [];
-  // Generate correct filenames: Untitled-10001.png to Untitled-10080.png
   for (let i = 1; i <= 80; i++) {
     const num = 10000 + i; // Creates: 10001, 10002, ... 10080
     const url = `public/assets/siri/Untitled-${num}.png`;
@@ -280,30 +287,63 @@ function initSiri() {
   // Show messages periodically
   setInterval(() => showSiriMessage(), 10000);
 
-  // Click handler with sound effect
+  // ✅ CLICK HANDLER WITH INTERACTION LOGIC
   els.siriMascot.addEventListener('click', () => {
-    showSiriMessage();
-    playHuhSound();
+    if (siriInteractionState === 0) {
+      // First click: "Huh?"
+      playHuhSound();
+      showSpecificMessage("what you want more from me");
+      siriInteractionState = 1;
+    } else if (siriInteractionState === 1) {
+      // Second click: "Hahh!"
+      playHahhSound();
+      showSpecificMessage("leave me alone");
+      siriInteractionState = 2;
+    } else {
+      // If they keep clicking, keep saying "leave me alone"
+      playHahhSound();
+      showSpecificMessage("leave me alone");
+    }
+
+    // Reset state after 5 seconds of inactivity so he becomes nice again
+    clearTimeout(siriResetTimer);
+    siriResetTimer = setTimeout(() => {
+      siriInteractionState = 0;
+    }, 5000);
   });
 }
 
-function showSiriMessage() {
+function showSpecificMessage(text) {
   if (!els.siriBubble) return;
+  els.siriBubble.textContent = text;
+  els.siriBubble.classList.add('show');
+  setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
+}
+
+// Standard random message
+function showSiriMessage() {
+  if (!els.siriBubble || siriInteractionState !== 0) return; // Don't show random messages if he's annoyed
   const msg = state.messages[Math.floor(Math.random() * state.messages.length)];
   els.siriBubble.textContent = msg;
   els.siriBubble.classList.add('show');
   setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
-// ✅ PLAY SOUND EFFECT - Fixed case sensitivity
+// ✅ NEW FUNCTION: Play huh.MP3
 function playHuhSound() {
-  const huhAudio = new Audio('public/assets/huh.MP3'); // Uppercase .MP3
+  const huhAudio = new Audio('public/assets/huh.MP3');
   huhAudio.volume = 0.5;
-  huhAudio.play().catch(error => {
-    console.log('Audio playback failed:', error);
-  });
+  huhAudio.play().catch(error => console.log('Audio playback failed:', error));
 }
 
+// ✅ NEW FUNCTION: Play hahh.MP3
+function playHahhSound() {
+  const hahhAudio = new Audio('public/assets/hahh.MP3');
+  hahhAudio.volume = 0.5;
+  hahhAudio.play().catch(error => console.log('Audio playback failed:', error));
+}
+
+// ================= FILTER =================
 function initFilter() {
   if (!els.filterBtns || !els.projects) return;
   els.filterBtns.forEach(btn => {
@@ -326,6 +366,7 @@ function initFilter() {
   });
 }
 
+// ================= ACCORDION =================
 function toggleAccordion(element) {
   const item = element.parentElement;
   const isActive = item.classList.contains('active');
@@ -333,6 +374,7 @@ function toggleAccordion(element) {
   if (!isActive) item.classList.add('active');
 }
 
+// ================= 3D MODEL =================
 function init3DModel() {
   modelViewer = document.getElementById('aboutModel');
   if (modelViewer) disable3DModel();
@@ -354,6 +396,7 @@ function disable3DModel() {
   }
 }
 
+// ================= MODAL =================
 function initModal() {
   const triggers = [els.openHireModal, els.openHireModalMobile, els.openHireModalContact].filter(Boolean);
   triggers.forEach(btn => btn.addEventListener('click', (e) => {
