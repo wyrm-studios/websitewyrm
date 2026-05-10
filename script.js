@@ -107,7 +107,6 @@ function toggleAudioIntro() {
       subtitleTimeouts.push(timeout);
     });
 
-    // Reset after audio finishes
     const endTimeout = setTimeout(() => {
       resetIntroUI();
     }, 55000);
@@ -168,7 +167,7 @@ function switchPage(pageId) {
   setTimeout(() => {
     if (currentPage) currentPage.classList.remove('active');
     targetPage.classList.add('active');
-    void targetPage.offsetWidth; // Force reflow
+    void targetPage.offsetWidth;
     targetPage.style.opacity = '1';
     targetPage.style.transform = 'translateY(0)';
 
@@ -259,15 +258,14 @@ function initVideoPlayer() {
   video.addEventListener('pause', () => playButton.style.opacity = '1');
 }
 
-// ================= SIRI MASCOT =================
+// ================= SIRI MASCOT - FIXED =================
 function initSiri() {
   if (!els.siriImg || !els.siriMascot) return;
 
-  // ✅ FIXED PATH LOGIC: 
-  // Generates filenames: Untitled-10001.png through Untitled-10080.png
+  // ✅ FIXED: Generate correct filenames (Untitled-10001.png to Untitled-10080.png)
   const frameUrls = [];
   for (let i = 1; i <= 80; i++) {
-    const num = 10000 + i; 
+    const num = 10000 + i; // Creates: 10001, 10002, ... 10080
     const url = `public/assets/siri/Untitled-${num}.png`;
     frameUrls.push(url);
   }
@@ -278,7 +276,7 @@ function initSiri() {
     img.src = url;
   });
 
-  // Start animation loop
+  // Start animation
   state.siriTimer = setInterval(() => {
     state.siriFrame = (state.siriFrame + 1) % frameUrls.length;
     els.siriImg.src = frameUrls[state.siriFrame];
@@ -287,7 +285,7 @@ function initSiri() {
   // Show messages periodically
   setInterval(() => showSiriMessage(), 10000);
 
-  // ✅ ADD SOUND EFFECT ON CLICK
+  // ✅ ADD CLICK HANDLER WITH SOUND EFFECT
   els.siriMascot.addEventListener('click', () => {
     showSiriMessage();
     playHuhSound();
@@ -302,11 +300,13 @@ function showSiriMessage() {
   setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
-// ✅ NEW FUNCTION: Plays the sound effect
+// ✅ NEW FUNCTION: Play huh.mp3 sound effect
 function playHuhSound() {
-  const huhAudio = new Audio('public/assets/huh.mp3');
-  huhAudio.volume = 0.5; // Adjust volume as needed
-  huhAudio.play().catch(error => console.log('Audio playback failed:', error));
+  const huhAudio = new Audio('public/assets/huh.MP3');
+  huhAudio.volume = 0.5;
+  huhAudio.play().catch(error => {
+    console.log('Audio playback failed:', error);
+  });
 }
 
 // ================= FILTER =================
@@ -409,7 +409,8 @@ function handleFormSubmit(e) {
     email: document.getElementById('email').value,
     service: document.getElementById('service').value,
     budget: document.getElementById('budget').value,
-    message: document.getElementById('message').value
+    message: document.getElementById('message').value,
+    timestamp: new Date().toISOString()
   };
 
   const subject = `New Inquiry from ${formData.brandName}`;
