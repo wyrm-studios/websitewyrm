@@ -17,6 +17,7 @@ let els = {};
 let modelViewer = null;
 let introAudio = null;
 let subtitleTimeouts = [];
+let siriAudio = null;
 
 // Subtitle timing data (in milliseconds) - SLOWED DOWN from "I hope you enjoy"
 const subtitles = [
@@ -25,13 +26,13 @@ const subtitles = [
     { time: 5000, text: "Maybe it was luck. Maybe curiosity." },
     { time: 8000, text: "Or maybe you're here because you actually need something built." },
     { time: 11000, text: "However you arrived, stay a while." },
-    { time: 14500, text: "Look around. I hope you enjoy what you find." },
-    { time: 19000, text: "I'm Wyrm. This is wyrm.studio." },
-    { time: 23000, text: "I make brands people remember." },
-    { time: 27000, text: "Not just visuals. Not just videos." },
-    { time: 31000, text: "I build complete identity systems:" },
-    { time: 35000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
-    { time: 41000, text: "Take your time. The good stuff is right here." }
+    { time: 14500, text: "Look around. I hope you enjoy what you find." }, // Slowed down
+    { time: 19000, text: "I'm Wyrm. This is wyrm.studio." }, // Slowed down
+    { time: 23000, text: "I make brands people remember." }, // Slowed down
+    { time: 27000, text: "Not just visuals. Not just videos." }, // Slowed down
+    { time: 31000, text: "I build complete identity systems:" }, // Slowed down
+    { time: 35000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" }, // Slowed down
+    { time: 41000, text: "Take your time. The good stuff is right here." } // Slowed down
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initModal();
     init3DModel();
     initAudioIntro();
+    initSiriAudio();
 });
 
 function cacheElements() {
@@ -105,7 +107,7 @@ function toggleAudioIntro() {
             subtitleTimeouts.push(timeout);
         });
         
-        const clearAllTimeout = setTimeout(() => {
+        const clearTimeout = setTimeout(() => {
             els.subtitleContainer.classList.remove('show');
             els.subtitleContainer.innerHTML = '';
             els.playIntroBtn.classList.remove('playing');
@@ -114,7 +116,7 @@ function toggleAudioIntro() {
                 <span>Listen to Introduction</span>
             `;
         }, 46000);
-        subtitleTimeouts.push(clearAllTimeout);
+        subtitleTimeouts.push(clearTimeout);
         
     } else {
         introAudio.pause();
@@ -129,6 +131,10 @@ function toggleAudioIntro() {
         subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
         subtitleTimeouts = [];
     }
+}
+
+function initSiriAudio() {
+    siriAudio = document.getElementById('siriSound');
 }
 
 function initNav() {
@@ -252,13 +258,7 @@ function updateLogo(theme) {
         logo.style.opacity = '0';
         setTimeout(() => {
             logo.src = theme === 'light' ? blackLogo : whiteLogo;
-            logo.onload = () => { 
-                logo.style.opacity = '1'; 
-            };
-            // Fallback in case onload doesn't fire
-            setTimeout(() => {
-                logo.style.opacity = '1';
-            }, 300);
+            logo.onload = () => { logo.style.opacity = '1'; };
         }, 150);
     });
 }
@@ -286,29 +286,30 @@ function initSiri() {
     if (!els.siriImg || !els.siriMascot) return;
     
     const frameUrls = [];
-    // Fixed: Using correct file names Untitled-10001.png to Untitled-10020.png
+    // Fixed: Using Untitled-10001.png, Untitled-10002.png, etc.
     for (let i = 1; i <= 20; i++) {
         const url = `public/assets/siri/Untitled-1000${i}.png`;
         frameUrls.push(url);
     }
     
-    // Preload images
     frameUrls.forEach(url => { 
         const img = new Image(); 
         img.src = url;
     });
     
-    // Animation loop
     state.siriTimer = setInterval(() => {
         state.siriFrame = (state.siriFrame + 1) % frameUrls.length;
         els.siriImg.src = frameUrls[state.siriFrame];
     }, 100);
     
-    // Show message every 10 seconds
-    setInterval(() => showSiriMessage(), 10000);
-    
-    // Click handler for Siri
+    // Click handler for Siri - plays sound and shows message
     els.siriMascot.addEventListener('click', () => {
+        // Play the hah.mp3 sound
+        if (siriAudio) {
+            siriAudio.currentTime = 0;
+            siriAudio.play().catch(e => console.log('Audio play failed:', e));
+        }
+        
         // Show the message
         if (els.siriBubble) {
             els.siriBubble.textContent = "what you want more mee ??";
