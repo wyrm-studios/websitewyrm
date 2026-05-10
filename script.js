@@ -17,22 +17,21 @@ let els = {};
 let modelViewer = null;
 let introAudio = null;
 let subtitleTimeouts = [];
-let siriAudio = null;
 
-// Subtitle timing data (in milliseconds) - SLOWED DOWN from "I hope you enjoy"
+// Subtitle timing data (in milliseconds)
 const subtitles = [
     { time: 0, text: "Hello there, stranger." },
     { time: 2000, text: "If you're reading this, you've found your way here." },
     { time: 5000, text: "Maybe it was luck. Maybe curiosity." },
     { time: 8000, text: "Or maybe you're here because you actually need something built." },
     { time: 11000, text: "However you arrived, stay a while." },
-    { time: 14500, text: "Look around. I hope you enjoy what you find." }, // Slowed down
-    { time: 19000, text: "I'm Wyrm. This is wyrm.studio." }, // Slowed down
-    { time: 23000, text: "I make brands people remember." }, // Slowed down
-    { time: 27000, text: "Not just visuals. Not just videos." }, // Slowed down
-    { time: 31000, text: "I build complete identity systems:" }, // Slowed down
-    { time: 35000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" }, // Slowed down
-    { time: 41000, text: "Take your time. The good stuff is right here." } // Slowed down
+    { time: 13500, text: "Look around. I hope you enjoy what you find." },
+    { time: 16000, text: "I'm Wyrm. This is wyrm.studio." },
+    { time: 18500, text: "I make brands people remember." },
+    { time: 21000, text: "Not just visuals. Not just videos." },
+    { time: 23500, text: "I build complete identity systems:" },
+    { time: 26000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
+    { time: 30000, text: "Take your time. The good stuff is right here." }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initModal();
     init3DModel();
     initAudioIntro();
-    initSiriAudio();
 });
 
 function cacheElements() {
@@ -89,6 +87,7 @@ function toggleAudioIntro() {
     if (!introAudio || !els.playIntroBtn || !els.subtitleContainer) return;
     
     if (introAudio.paused) {
+        // Play audio
         introAudio.play();
         els.playIntroBtn.classList.add('playing');
         els.playIntroBtn.innerHTML = `
@@ -97,9 +96,11 @@ function toggleAudioIntro() {
         `;
         els.subtitleContainer.classList.add('show');
         
+        // Clear any existing timeouts
         subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
         subtitleTimeouts = [];
         
+        // Set up subtitle timing
         subtitles.forEach((subtitle, index) => {
             const timeout = setTimeout(() => {
                 els.subtitleContainer.innerHTML = `<div class="subtitle-text">${subtitle.text}</div>`;
@@ -107,6 +108,7 @@ function toggleAudioIntro() {
             subtitleTimeouts.push(timeout);
         });
         
+        // Clear subtitles when audio ends
         const clearTimeout = setTimeout(() => {
             els.subtitleContainer.classList.remove('show');
             els.subtitleContainer.innerHTML = '';
@@ -115,10 +117,11 @@ function toggleAudioIntro() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 <span>Listen to Introduction</span>
             `;
-        }, 46000);
+        }, 34000); // Total audio duration + buffer
         subtitleTimeouts.push(clearTimeout);
         
     } else {
+        // Pause audio
         introAudio.pause();
         els.playIntroBtn.classList.remove('playing');
         els.playIntroBtn.innerHTML = `
@@ -128,13 +131,10 @@ function toggleAudioIntro() {
         els.subtitleContainer.classList.remove('show');
         els.subtitleContainer.innerHTML = '';
         
+        // Clear all timeouts
         subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
         subtitleTimeouts = [];
     }
-}
-
-function initSiriAudio() {
-    siriAudio = document.getElementById('siriSound');
 }
 
 function initNav() {
@@ -179,11 +179,6 @@ function switchPage(pageId) {
         void targetPage.offsetWidth;
         targetPage.style.opacity = '1';
         targetPage.style.transform = 'translateY(0)';
-        
-        if (pageId === 'work') {
-            const container = document.querySelector('.portfolio-container');
-            if (container) container.scrollTop = 0;
-        }
         
         if (pageId !== 'about' && modelViewer) {
             disable3DModel();
@@ -286,9 +281,9 @@ function initSiri() {
     if (!els.siriImg || !els.siriMascot) return;
     
     const frameUrls = [];
-    // Fixed: Using Untitled-10001.png, Untitled-10002.png, etc.
     for (let i = 1; i <= 20; i++) {
-        const url = `public/assets/siri/Untitled-1000${i}.png`;
+        const num = i.toString().padStart(5, '0');
+        const url = `public/assets/siri/Untitled-${num}.png`;
         frameUrls.push(url);
     }
     
@@ -302,21 +297,9 @@ function initSiri() {
         els.siriImg.src = frameUrls[state.siriFrame];
     }, 100);
     
-    // Click handler for Siri - plays sound and shows message
-    els.siriMascot.addEventListener('click', () => {
-        // Play the hah.mp3 sound
-        if (siriAudio) {
-            siriAudio.currentTime = 0;
-            siriAudio.play().catch(e => console.log('Audio play failed:', e));
-        }
-        
-        // Show the message
-        if (els.siriBubble) {
-            els.siriBubble.textContent = "what you want more mee ??";
-            els.siriBubble.classList.add('show');
-            setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
-        }
-    });
+    setInterval(() => showSiriMessage(), 10000);
+    
+    els.siriMascot.addEventListener('click', showSiriMessage);
 }
 
 function showSiriMessage() {
