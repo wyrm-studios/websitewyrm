@@ -20,22 +20,20 @@ let subtitleTimeouts = [];
 let siriInteractionState = 0; // 0: default, 1: annoyed, 2: leave me alone
 let siriResetTimer = null;
 
-// Subtitle timing data (in milliseconds)
 const subtitles = [
-  { time: 2062, text: "Hello there, stranger." },
-  { time: 4137, text: "If you're reading this, you've found your way here." },
-  { time: 7109, text: "Maybe it was luck. Maybe curiosity." },
-  { time: 11005, text: "Or maybe you're here because you actually need something built." },
-  { time: 13979, text: "However you arrived, stay a while." },
-  { time: 17089, text: "Look around. I hope you enjoy what you find." },
-  { time: 20901, text: "I'm Wyrm. This is wyrm.studio." },
-  { time: 23685, text: "I make brands people remember." },
-  { time: 26655, text: "Not just visuals. Not just videos." },
-  { time: 29190, text: "I build complete identity systems:" },
-  { time: 34127, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
-  { time: 37810, text: "Take your time. The good stuff is right here." }
+  { time: 0, text: "Hello there, stranger." },
+  { time: 2075, text: "If you're reading this, you've found your way here." },
+  { time: 5047, text: "Maybe it was luck. Maybe curiosity." },
+  { time: 8943, text: "Or maybe you're here because you actually need something built." },
+  { time: 11917, text: "However you arrived, stay a while." },
+  { time: 15027, text: "Look around. I hope you enjoy what you find." },
+  { time: 18839, text: "I'm Wyrm. This is wyrm.studio." },
+  { time: 21623, text: "I make brands people remember." },
+  { time: 24593, text: "Not just visuals. Not just videos." },
+  { time: 27128, text: "I build complete identity systems:" },
+  { time: 32065, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
+  { time: 35748, text: "Take your time. The good stuff is right here." }
 ];
-
 document.addEventListener('DOMContentLoaded', () => {
   cacheElements();
   loadTheme();
