@@ -24,14 +24,14 @@ const subtitles = [
     { time: 2000, text: "If you're reading this, you've found your way here." },
     { time: 5000, text: "Maybe it was luck. Maybe curiosity." },
     { time: 8000, text: "Or maybe you're here because you actually need something built." },
-    { time: 11000, text: "However you arrived, stay a while." },
-    { time: 15500, text: "Look around. I hope you enjoy what you find." },
-    { time: 19000, text: "I'm Wyrm. This is wyrm.studio." },
-    { time: 20500, text: "I make brands people remember." },
-    { time: 24000, text: "Not just visuals. Not just videos." },
-    { time: 26500, text: "I build complete identity systems:" },
-    { time: 29000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
-    { time: 33000, text: "Take your time. The good stuff is right here." }
+    { time: 13000, text: "However you arrived, stay a while." },
+    { time: 18500, text: "Look around. I hope you enjoy what you find." },
+    { time: 21000, text: "I'm Wyrm. This is wyrm.studio." },
+    { time: 22500, text: "I make brands people remember." },
+    { time: 26000, text: "Not just visuals. Not just videos." },
+    { time: 29500, text: "I build complete identity systems:" },
+    { time: 32000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
+    { time: 35000, text: "Take your time. The good stuff is right here." }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
