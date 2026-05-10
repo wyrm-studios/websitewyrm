@@ -844,4 +844,39 @@ main { min-height: 100vh; position: relative; }
   .mobile-panel { width: 90%; }
   .about-glass-card { padding: 2rem 1.5rem; }
   .about-name { font-size: 2rem; }
+
+/* Vimeo Video Styles */
+.video-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+}
+
+/* Projects Page Scroll Fix */
+#projects.page {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.projects-wrapper {
+  padding-bottom: 6rem;
+}
+
+/* Ensure all pages can scroll properly */
+.page.active {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix for mobile scrolling */
+@media (max-width: 768px) {
+  .projects-grid {
+    gap: 1.5rem;
+  }
+  
+  .project-card {
+    margin-bottom: 0.5rem;
+  }
+}
 }
