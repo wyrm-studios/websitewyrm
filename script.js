@@ -15,6 +15,24 @@ const state = {
 
 let els = {};
 let modelViewer = null;
+let introAudio = null;
+let subtitleTimeouts = [];
+
+// Subtitle timing data (in milliseconds) - SLOWED DOWN from "I hope you enjoy"
+const subtitles = [
+    { time: 0, text: "Hello there, stranger." },
+    { time: 2000, text: "If you're reading this, you've found your way here." },
+    { time: 5000, text: "Maybe it was luck. Maybe curiosity." },
+    { time: 8000, text: "Or maybe you're here because you actually need something built." },
+    { time: 11000, text: "However you arrived, stay a while." },
+    { time: 14500, text: "Look around. I hope you enjoy what you find." },
+    { time: 19000, text: "I'm Wyrm. This is wyrm.studio." },
+    { time: 23000, text: "I make brands people remember." },
+    { time: 27000, text: "Not just visuals. Not just videos." },
+    { time: 31000, text: "I build complete identity systems:" },
+    { time: 35000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
+    { time: 41000, text: "Take your time. The good stuff is right here." }
+];
 
 document.addEventListener('DOMContentLoaded', () => {
     cacheElements();
@@ -27,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoPlayer();
     initModal();
     init3DModel();
+    initAudioIntro();
 });
 
 function cacheElements() {
@@ -50,8 +69,66 @@ function cacheElements() {
         closeHireModal: document.getElementById('closeHireModal'),
         hireForm: document.getElementById('hireForm'),
         formSuccess: document.getElementById('formSuccess'),
-        closeSuccess: document.getElementById('closeSuccess')
+        closeSuccess: document.getElementById('closeSuccess'),
+        playIntroBtn: document.getElementById('playIntroBtn'),
+        subtitleContainer: document.getElementById('subtitleContainer')
     };
+}
+
+function initAudioIntro() {
+    introAudio = document.getElementById('introAudio');
+    
+    if (els.playIntroBtn && introAudio) {
+        els.playIntroBtn.addEventListener('click', toggleAudioIntro);
+    }
+}
+
+function toggleAudioIntro() {
+    if (!introAudio || !els.playIntroBtn || !els.subtitleContainer) return;
+    
+    if (introAudio.paused) {
+        introAudio.play();
+        els.playIntroBtn.classList.add('playing');
+        els.playIntroBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            <span>Playing Introduction...</span>
+        `;
+        els.subtitleContainer.classList.add('show');
+        
+        subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
+        subtitleTimeouts = [];
+        
+        subtitles.forEach((subtitle, index) => {
+            const timeout = setTimeout(() => {
+                els.subtitleContainer.innerHTML = `<div class="subtitle-text">${subtitle.text}</div>`;
+            }, subtitle.time);
+            subtitleTimeouts.push(timeout);
+        });
+        
+        const clearAllTimeout = setTimeout(() => {
+            els.subtitleContainer.classList.remove('show');
+            els.subtitleContainer.innerHTML = '';
+            els.playIntroBtn.classList.remove('playing');
+            els.playIntroBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span>Listen to Introduction</span>
+            `;
+        }, 46000);
+        subtitleTimeouts.push(clearAllTimeout);
+        
+    } else {
+        introAudio.pause();
+        els.playIntroBtn.classList.remove('playing');
+        els.playIntroBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Listen to Introduction</span>
+        `;
+        els.subtitleContainer.classList.remove('show');
+        els.subtitleContainer.innerHTML = '';
+        
+        subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
+        subtitleTimeouts = [];
+    }
 }
 
 function initNav() {
@@ -151,6 +228,7 @@ function initTheme() {
         state.theme = state.theme === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', state.theme);
         localStorage.setItem('wyrm-theme', state.theme);
+        updateLogo(state.theme);
     });
 }
 
@@ -159,7 +237,30 @@ function loadTheme() {
     if (saved) {
         state.theme = saved;
         document.documentElement.setAttribute('data-theme', saved);
+        updateLogo(saved);
+    } else {
+        updateLogo('dark');
     }
+}
+
+function updateLogo(theme) {
+    const logos = document.querySelectorAll('.logo-img');
+    const whiteLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png';
+    const blackLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/black%20logo%20png.png';
+    
+    logos.forEach(logo => {
+        logo.style.opacity = '0';
+        setTimeout(() => {
+            logo.src = theme === 'light' ? blackLogo : whiteLogo;
+            logo.onload = () => { 
+                logo.style.opacity = '1'; 
+            };
+            // Fallback in case onload doesn't fire
+            setTimeout(() => {
+                logo.style.opacity = '1';
+            }, 300);
+        }, 150);
+    });
 }
 
 function initVideoPlayer() {
@@ -185,25 +286,36 @@ function initSiri() {
     if (!els.siriImg || !els.siriMascot) return;
     
     const frameUrls = [];
+    // Fixed: Using correct file names Untitled-10001.png to Untitled-10020.png
     for (let i = 1; i <= 20; i++) {
-        const num = i.toString().padStart(5, '0');
         const url = `public/assets/siri/Untitled-1000${i}.png`;
         frameUrls.push(url);
     }
     
+    // Preload images
     frameUrls.forEach(url => { 
         const img = new Image(); 
         img.src = url;
     });
     
+    // Animation loop
     state.siriTimer = setInterval(() => {
         state.siriFrame = (state.siriFrame + 1) % frameUrls.length;
         els.siriImg.src = frameUrls[state.siriFrame];
     }, 100);
     
+    // Show message every 10 seconds
     setInterval(() => showSiriMessage(), 10000);
     
-    els.siriMascot.addEventListener('click', showSiriMessage);
+    // Click handler for Siri
+    els.siriMascot.addEventListener('click', () => {
+        // Show the message
+        if (els.siriBubble) {
+            els.siriBubble.textContent = "what you want more mee ??";
+            els.siriBubble.classList.add('show');
+            setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
+        }
+    });
 }
 
 function showSiriMessage() {
@@ -349,4 +461,4 @@ Message: ${formData.message}`;
     }
 
     console.log('Form submitted:', formData);
-}s
+}
