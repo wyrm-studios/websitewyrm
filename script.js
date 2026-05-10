@@ -281,7 +281,7 @@ function initSiri() {
     if (!els.siriImg || !els.siriMascot) return;
     
     const frameUrls = [];
-    for (let i = 1; i <= 20; i++) {
+    for (let i = 1; i <= 80; i++) {
         const num = i.toString().padStart(5, '0');
         const url = `public/assets/siri/Untitled-${num}.png`;
         frameUrls.push(url);
