@@ -27,13 +27,13 @@ const subtitles = [
   { time: 5000, text: "Maybe it was luck. Maybe curiosity. " },
   { time: 8000, text: "Or maybe you're here because you actually need something built. " },
   { time: 10000, text: "However you arrived, stay a while. " },
-  { time: 15500, text: "Look around. I hope you enjoy what you find. " },
+  { time: 13000, text: "Look around. I hope you enjoy what you find. " },
   { time: 20000, text: "I'm Wyrm. This is wyrm.studio. " },
   { time: 22500, text: "I make brands people remember. " },
-  { time: 26000, text: "Not just visuals. Not just videos. " },
-  { time: 29500, text: "I build complete identity systems: " },
-  { time: 44000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design " },
-  { time: 50000, text: "Take your time. The good stuff is right here. " }
+  { time: 24000, text: "Not just visuals. Not just videos. " },
+  { time: 27500, text: "I build complete identity systems: " },
+  { time: 38000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design " },
+  { time: 45000, text: "Take your time. The good stuff is right here. " }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
