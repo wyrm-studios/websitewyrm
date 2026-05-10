@@ -6,45 +6,72 @@
     <meta name="theme-color" content="#1A1A1A">
     <title>WYRM.STUDIOS®</title>
     <meta name="description" content="Premium visuals, branding & motion design">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/style.css">
+    
+    <!-- 3D Model Viewer Script -->
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 </head>
 <body>
+
+    <!-- Background Gradient -->
     <div class="bg-gradient"></div>
 
+    <!-- Desktop Navigation -->
     <nav class="nav-pill desktop-nav">
         <div class="nav-left">
             <a href="#" class="nav-link active" data-page="home">Home</a>
+            <a href="#" class="nav-link" data-page="work">Work</a>
         </div>
         
         <div class="nav-center">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="logo-img desktop-logo" onerror="this.style.display='none'">
+            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="logo-img" id="logo">
             <span class="logo-text">WYRM.STUDIOS®</span>
         </div>
         
         <div class="nav-right">
             <a href="#" class="nav-link" data-page="about">About</a>
             
+            <!-- Theme Toggle -->
             <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">
-                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <!-- Sun Icon -->
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <!-- Moon Icon -->
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
             </button>
             
             <button class="nav-cta-btn" id="openHireModal">Hire Us</button>
         </div>
     </nav>
 
+    <!-- Mobile Panel Navigation -->
     <div class="mobile-panel" id="mobilePanel">
         <div class="mobile-panel-header">
-            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="mobile-logo" onerror="this.style.display='none'">
+            <img src="https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png" alt="WYRM.STUDIOS" class="mobile-logo" id="mobileLogo">
             <button class="mobile-close-btn" id="closeMobilePanel" aria-label="Close menu">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
         </div>
         <div class="mobile-nav-links">
             <a href="#" class="mobile-nav-link" data-page="home">Home</a>
+            <a href="#" class="mobile-nav-link" data-page="work">Work</a>
             <a href="#" class="mobile-nav-link" data-page="about">About</a>
             <button class="mobile-cta-btn" id="openHireModalMobile">Hire Us</button>
         </div>
@@ -53,36 +80,86 @@
         </div>
     </div>
 
+    <!-- Mobile Hamburger Trigger -->
     <button class="mobile-hamburger" id="openMobilePanel" aria-label="Open menu">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
     </button>
 
+    <!-- Main Content -->
     <main>
+        <!-- HOME - VIDEO -->
         <section id="home" class="page active">
             <div class="video-container">
                 <div class="video-wrapper">
-                    <iframe id="vimeoVideo" 
-                            src="https://player.vimeo.com/video/1190794803?autoplay=1&muted=0&loop=1&byline=0&title=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=1" 
-                            width="100%" 
-                            height="100%" 
-                            frameborder="0" 
-                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                            referrerpolicy="strict-origin-when-cross-origin" 
-                            title="WYRM Showreel"
-                            allowfullscreen>
-                    </iframe>
+                    <video id="introVideo" class="intro-video" autoplay muted loop playsinline>
+                        <source src="0502.mp4" type="video/mp4">
+                    </video>
+                    <button class="play-button" id="playButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    </button>
+                    <div class="video-controls">
+                        <div class="pause-indicator">⏸</div>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- WORK -->
+        <section id="work" class="page">
+            <div class="portfolio-container">
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="web">Web Design</button>
+                    <button class="filter-btn" data-filter="branding">Branding</button>
+                    <button class="filter-btn" data-filter="motion">Motion</button>
+                    <button class="filter-btn" data-filter="video">Video Editing</button>
+                </div>
+                <div class="projects-grid">
+                    <div class="project-card" data-category="motion">
+                        <div class="project-image" style="background-image: url('public/assets/work/nike-campaign.jpg');"></div>
+                        <div class="project-info">
+                            <h3>NIKE — Launch Campaign</h3>
+                            <p>Global brand activation through powerful motion storytelling — 30s hero films.</p>
+                            <span class="project-year">2026</span>
+                        </div>
+                    </div>
+                    <div class="project-card" data-category="branding">
+                        <div class="project-image" style="background-image: url('public/assets/work/apple-brand.jpg');"></div>
+                        <div class="project-info">
+                            <h3>APPLE — Brand Film</h3>
+                            <p>Premium visual narrative showcasing innovation and design excellence.</p>
+                            <span class="project-year">2026</span>
+                        </div>
+                    </div>
+                    <div class="project-card" data-category="web">
+                        <div class="project-image" style="background-image: url('public/assets/work/wyrm-web.jpg');"></div>
+                        <div class="project-info">
+                            <h3>WYRM — Digital Experience</h3>
+                            <p>Immersive web platform with cinematic interactions and 3D elements.</p>
+                            <span class="project-year">2026</span>
+                        </div>
+                    </div>
+                    <div class="project-card" data-category="video">
+                        <div class="project-image" style="background-image: url('public/assets/work/nike-edit.jpg');"></div>
+                        <div class="project-info">
+                            <h3>NIKE — Documentary Edit</h3>
+                            <p>Behind-the-scenes athlete journey with high-end post-production.</p>
+                            <span class="project-year">2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT - GLASS SECTION & 3D MODEL -->
         <section id="about" class="page">
             <div class="about-wrapper">
                 <div class="about-model-area">
                     <model-viewer 
                         id="aboutModel"
-                        src="./retro_computer_setup_free.glb" 
+                        src="retro_computer_setup_free.glb" 
                         alt="3D Retro Computer Setup"
                         auto-rotate 
                         camera-controls 
@@ -96,9 +173,19 @@
 
                 <div class="about-glass-card">
                     <div class="about-header">
+                        <!-- Changed from Omar to Wyrm -->
                         <h1 class="about-name">Wyrm</h1>
                         <p class="about-title">Creative Director & Motion Designer</p>
                         <p class="about-subtitle">I help ambitious brands turn complex ideas into clear, memorable visuals.</p>
+                    </div>
+
+                    <!-- Audio Intro Section -->
+                    <div class="audio-intro-section">
+                        <button id="playIntroBtn" class="play-intro-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            <span>Listen to Introduction</span>
+                        </button>
+                        <div id="subtitleContainer" class="subtitle-container"></div>
                     </div>
 
                     <div class="accordion-container">
@@ -154,6 +241,7 @@
             </div>
         </section>
 
+        <!-- CONTACT -->
         <section id="contact" class="page">
             <div class="center-container">
                 <h2 class="section-title">Let's Work</h2>
@@ -163,6 +251,7 @@
         </section>
     </main>
 
+    <!-- Hire Us Modal Form -->
     <div class="modal-overlay" id="hireModal">
         <div class="modal-content">
             <button class="modal-close" id="closeHireModal" aria-label="Close form">
@@ -234,6 +323,12 @@
         </div>
     </div>
 
+    <!-- Hidden Audio Element for Intro -->
+    <audio id="introAudio" preload="auto">
+        <source src="aboutme.wav" type="audio/wav">
+    </audio>
+
+    <!-- Siri Mascot -->
     <div class="siri-container">
         <div class="siri-bubble" id="siriBubble"></div>
         <div class="siri-mascot" id="siriMascot">
@@ -241,6 +336,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- JavaScript -->
+    <script src="src/script.js"></script>
 </body>
 </html>
