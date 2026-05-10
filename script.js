@@ -283,10 +283,10 @@ function initSiri() {
     const frameUrls = [];
     for (let i = 1; i <= 80; i++) {
         const num = i.toString().padStart(5, '0');
-        const url = `public/assets/siri/Untitled-${num}.png`;
+        const url = `public/assets/siri/Untitled-1000${num}.png`;
         frameUrls.push(url);
     }
-    
+
     frameUrls.forEach(url => { 
         const img = new Image(); 
         img.src = url;
