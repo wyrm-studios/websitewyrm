@@ -17,6 +17,8 @@ let els = {};
 let modelViewer = null;
 let introAudio = null;
 let subtitleTimeouts = [];
+let siriInteractionState = 0;
+let siriResetTimer = null;
 
 const subtitles = [
   { time: 0, text: "Hello there, stranger. " },
@@ -288,15 +290,52 @@ function initSiri() {
 
   setInterval(() => showSiriMessage(), 10000);
 
-  els.siriMascot.addEventListener('click', showSiriMessage);
+  els.siriMascot.addEventListener('click', () => {
+    if (siriInteractionState === 0) {
+      playHuhSound();
+      showSpecificMessage("what you want more from me");
+      siriInteractionState = 1;
+    } else if (siriInteractionState === 1) {
+      playHahhSound();
+      showSpecificMessage("leave me alone");
+      siriInteractionState = 2;
+    } else {
+      playHahhSound();
+      showSpecificMessage("leave me alone");
+    }
+
+    clearTimeout(siriResetTimer);
+    siriResetTimer = setTimeout(() => {
+      siriInteractionState = 0;
+    }, 5000);
+  });
+}
+
+function showSpecificMessage(text) {
+  if (!els.siriBubble) return;
+  els.siriBubble.textContent = text;
+  els.siriBubble.classList.add('show');
+  setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
 function showSiriMessage() {
-  if (!els.siriBubble) return;
+  if (!els.siriBubble || siriInteractionState !== 0) return;
   const msg = state.messages[Math.floor(Math.random() * state.messages.length)];
   els.siriBubble.textContent = msg;
   els.siriBubble.classList.add('show');
   setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
+}
+
+function playHuhSound() {
+  const huhAudio = new Audio('public/assets/huh.MP3');
+  huhAudio.volume = 0.5;
+  huhAudio.play().catch(error => console.log('Audio playback failed:', error));
+}
+
+function playHahhSound() {
+  const hahhAudio = new Audio('public/assets/hahh.MP3');
+  hahhAudio.volume = 0.5;
+  hahhAudio.play().catch(error => console.log('Audio playback failed:', error));
 }
 
 function initFilter() {
