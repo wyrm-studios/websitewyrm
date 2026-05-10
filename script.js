@@ -15,6 +15,24 @@ const state = {
 
 let els = {};
 let modelViewer = null;
+let introAudio = null;
+let subtitleTimeouts = [];
+
+// Subtitle timing data (in milliseconds)
+const subtitles = [
+    { time: 0, text: "Hello there, stranger." },
+    { time: 2000, text: "If you're reading this, you've found your way here." },
+    { time: 5000, text: "Maybe it was luck. Maybe curiosity." },
+    { time: 8000, text: "Or maybe you're here because you actually need something built." },
+    { time: 11000, text: "However you arrived, stay a while." },
+    { time: 13500, text: "Look around. I hope you enjoy what you find." },
+    { time: 16000, text: "I'm Wyrm. This is wyrm.studio." },
+    { time: 18500, text: "I make brands people remember." },
+    { time: 21000, text: "Not just visuals. Not just videos." },
+    { time: 23500, text: "I build complete identity systems:" },
+    { time: 26000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
+    { time: 30000, text: "Take your time. The good stuff is right here." }
+];
 
 document.addEventListener('DOMContentLoaded', () => {
     cacheElements();
@@ -27,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVideoPlayer();
     initModal();
     init3DModel();
+    initAudioIntro();
 });
 
 function cacheElements() {
@@ -50,48 +69,74 @@ function cacheElements() {
         closeHireModal: document.getElementById('closeHireModal'),
         hireForm: document.getElementById('hireForm'),
         formSuccess: document.getElementById('formSuccess'),
-        closeSuccess: document.getElementById('closeSuccess')
+        closeSuccess: document.getElementById('closeSuccess'),
+        playIntroBtn: document.getElementById('playIntroBtn'),
+        subtitleContainer: document.getElementById('subtitleContainer')
     };
 }
 
-/* ========== THEME & LOGIC ========== */
-function initTheme() {
-    if (!els.themeToggle) return;
+function initAudioIntro() {
+    introAudio = document.getElementById('introAudio');
     
-    els.themeToggle.addEventListener('click', () => {
-        state.theme = state.theme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', state.theme);
-        localStorage.setItem('wyrm-theme', state.theme);
-        updateLogo(state.theme); // Update logo on toggle
-    });
-}
-
-function loadTheme() {
-    const saved = localStorage.getItem('wyrm-theme');
-    if (saved) {
-        state.theme = saved;
-        document.documentElement.setAttribute('data-theme', saved);
-        updateLogo(saved); // Update logo on load
-    } else {
-        updateLogo('dark'); // Default to dark logo
+    if (els.playIntroBtn && introAudio) {
+        els.playIntroBtn.addEventListener('click', toggleAudioIntro);
     }
 }
 
-function updateLogo(theme) {
-    const logos = document.querySelectorAll('.logo-img');
-    const whiteLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png';
-    const blackLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/black%20logo%20png.png';
+function toggleAudioIntro() {
+    if (!introAudio || !els.playIntroBtn || !els.subtitleContainer) return;
     
-    logos.forEach(logo => {
-        logo.style.opacity = '0'; // Fade out
-        setTimeout(() => {
-            logo.src = theme === 'light' ? blackLogo : whiteLogo;
-            logo.onload = () => { logo.style.opacity = '1'; }; // Fade in after load
-        }, 150);
-    });
+    if (introAudio.paused) {
+        // Play audio
+        introAudio.play();
+        els.playIntroBtn.classList.add('playing');
+        els.playIntroBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+            <span>Playing Introduction...</span>
+        `;
+        els.subtitleContainer.classList.add('show');
+        
+        // Clear any existing timeouts
+        subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
+        subtitleTimeouts = [];
+        
+        // Set up subtitle timing
+        subtitles.forEach((subtitle, index) => {
+            const timeout = setTimeout(() => {
+                els.subtitleContainer.innerHTML = `<div class="subtitle-text">${subtitle.text}</div>`;
+            }, subtitle.time);
+            subtitleTimeouts.push(timeout);
+        });
+        
+        // Clear subtitles when audio ends
+        const clearTimeout = setTimeout(() => {
+            els.subtitleContainer.classList.remove('show');
+            els.subtitleContainer.innerHTML = '';
+            els.playIntroBtn.classList.remove('playing');
+            els.playIntroBtn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span>Listen to Introduction</span>
+            `;
+        }, 34000); // Total audio duration + buffer
+        subtitleTimeouts.push(clearTimeout);
+        
+    } else {
+        // Pause audio
+        introAudio.pause();
+        els.playIntroBtn.classList.remove('playing');
+        els.playIntroBtn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>Listen to Introduction</span>
+        `;
+        els.subtitleContainer.classList.remove('show');
+        els.subtitleContainer.innerHTML = '';
+        
+        // Clear all timeouts
+        subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
+        subtitleTimeouts = [];
+    }
 }
 
-/* ========== NAVIGATION ========== */
 function initNav() {
     els.navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -135,11 +180,6 @@ function switchPage(pageId) {
         targetPage.style.opacity = '1';
         targetPage.style.transform = 'translateY(0)';
         
-        if (pageId === 'work') {
-            const container = document.querySelector('.portfolio-container');
-            if (container) container.scrollTop = 0;
-        }
-        
         if (pageId !== 'about' && modelViewer) {
             disable3DModel();
         }
@@ -157,7 +197,6 @@ function switchPage(pageId) {
     });
 }
 
-/* ========== MOBILE NAV ========== */
 function initMobileNav() {
     if (!els.openMobilePanel || !els.closeMobilePanel) return;
     
@@ -183,14 +222,68 @@ function closeMobilePanel() {
     document.body.style.overflow = '';
 }
 
-/* ========== SIRI ========== */
+function initTheme() {
+    if (!els.themeToggle) return;
+    
+    els.themeToggle.addEventListener('click', () => {
+        state.theme = state.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', state.theme);
+        localStorage.setItem('wyrm-theme', state.theme);
+        updateLogo(state.theme);
+    });
+}
+
+function loadTheme() {
+    const saved = localStorage.getItem('wyrm-theme');
+    if (saved) {
+        state.theme = saved;
+        document.documentElement.setAttribute('data-theme', saved);
+        updateLogo(saved);
+    } else {
+        updateLogo('dark');
+    }
+}
+
+function updateLogo(theme) {
+    const logos = document.querySelectorAll('.logo-img');
+    const whiteLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png';
+    const blackLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/black%20logo%20png.png';
+    
+    logos.forEach(logo => {
+        logo.style.opacity = '0';
+        setTimeout(() => {
+            logo.src = theme === 'light' ? blackLogo : whiteLogo;
+            logo.onload = () => { logo.style.opacity = '1'; };
+        }, 150);
+    });
+}
+
+function initVideoPlayer() {
+    const video = document.getElementById('introVideo');
+    const playButton = document.getElementById('playButton');
+    if (!video || !playButton) return;
+
+    playButton.addEventListener('click', () => {
+        if (video.paused) {
+            video.play();
+            playButton.style.opacity = '0';
+        } else {
+            video.pause();
+            playButton.style.opacity = '1';
+        }
+    });
+
+    video.addEventListener('play', () => { playButton.style.opacity = '0'; });
+    video.addEventListener('pause', () => { playButton.style.opacity = '1'; });
+}
+
 function initSiri() {
     if (!els.siriImg || !els.siriMascot) return;
     
     const frameUrls = [];
     for (let i = 1; i <= 20; i++) {
-        const num = i.toString().padStart(2, '0');
-        const url = `public/assets/siri/Untitled-4000100${num}.png`;
+        const num = i.toString().padStart(5, '0');
+        const url = `public/assets/siri/Untitled-${num}.png`;
         frameUrls.push(url);
     }
     
@@ -217,27 +310,6 @@ function showSiriMessage() {
     setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
-/* ========== VIDEO ========== */
-function initVideoPlayer() {
-    const video = document.getElementById('introVideo');
-    const playButton = document.getElementById('playButton');
-    if (!video || !playButton) return;
-
-    playButton.addEventListener('click', () => {
-        if (video.paused) {
-            video.play();
-            playButton.style.opacity = '0';
-        } else {
-            video.pause();
-            playButton.style.opacity = '1';
-        }
-    });
-
-    video.addEventListener('play', () => { playButton.style.opacity = '0'; });
-    video.addEventListener('pause', () => { playButton.style.opacity = '1'; });
-}
-
-/* ========== FILTER ========== */
 function initFilter() {
     if (!els.filterBtns || !els.projects) return;
     els.filterBtns.forEach(btn => {
@@ -260,7 +332,6 @@ function initFilter() {
     });
 }
 
-/* ========== ACCORDION ========== */
 function toggleAccordion(element) {
     const item = element.parentElement;
     const isActive = item.classList.contains('active');
@@ -268,7 +339,6 @@ function toggleAccordion(element) {
     if (!isActive) item.classList.add('active');
 }
 
-/* ========== 3D MODEL ========== */
 function init3DModel() {
     modelViewer = document.getElementById('aboutModel');
     if (modelViewer) {
@@ -292,7 +362,6 @@ function disable3DModel() {
     }
 }
 
-/* ========== MODAL ========== */
 function initModal() {
     const openTriggers = [els.openHireModal, els.openHireModalMobile, els.openHireModalContact].filter(Boolean);
     openTriggers.forEach(btn => {
