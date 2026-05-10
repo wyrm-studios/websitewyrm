@@ -456,25 +456,48 @@ function resetForm() {
 
 function handleFormSubmit(e) {
   e.preventDefault();
-  const formData = {
-    brandName: document.getElementById('brandName').value,
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    service: document.getElementById('service').value,
-    budget: document.getElementById('budget').value,
-    message: document.getElementById('message').value,
-    timestamp: new Date().toISOString()
-  };
-
-  const subject = `New Inquiry from ${formData.brandName}`;
-  const body = `Name: ${formData.name}\nEmail: ${formData.email}\nService: ${formData.service}\nBudget: ${formData.budget}\nMessage: ${formData.message}`;
   
-  window.location.href = `mailto:contact.wyrmstudio@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const form = e.target;
+  const submitBtn = form.querySelector('.modal-submit-btn');
+  const originalBtnText = submitBtn.innerHTML;
+  
+  // Show loading state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = 'Sending...';
 
-  if (els.hireForm && els.formSuccess) {
-    els.hireForm.style.display = 'none';
-    els.formSuccess.classList.add('active');
-  }
-
-  console.log('Form submitted:', formData);
+  fetch(form.action, {
+    method: 'POST',
+    body: new FormData(form),
+    headers: {
+      'Accept': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      // Success: show success message
+      if (els.hireForm && els.formSuccess) {
+        els.hireForm.style.display = 'none';
+        els.formSuccess.classList.add('active');
+      }
+      form.reset();
+    } else {
+      // Error
+      response.json().then(data => {
+        if (data.errors) {
+          alert('Please fill in all required fields.');
+        } else {
+          alert('Oops! Something went wrong. Please try again.');
+        }
+      });
+    }
+  })
+  .catch(error => {
+    console.error('Form error:', error);
+    alert('Oops! Something went wrong. Please try again.');
+  })
+  .finally(() => {
+    // Restore button
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
+  });
 }
