@@ -30,8 +30,8 @@ const subtitles = [
   { time: 18839, text: "I'm Wyrm. This is wyrm.studio." },
   { time: 21623, text: "I make brands people remember." },
   { time: 24593, text: "Not just visuals. Not just videos." },
-  { time: 27128, text: "I build complete identity systems:" },
-  { time: 32065, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
+  { time: 26128, text: "I build complete identity systems:" },
+  { time: 31065, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
   { time: 35748, text: "Take your time. The good stuff is right here." }
 ];
 document.addEventListener('DOMContentLoaded', () => {
