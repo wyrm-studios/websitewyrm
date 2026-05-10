@@ -13,12 +13,6 @@ const state = {
     ]
 };
 
-// Logo URLs
-const logoUrls = {
-    dark: 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png',
-    light: 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/black%20logo%20png.png'
-};
-
 let els = {};
 let modelViewer = null;
 
@@ -29,9 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileNav();
     initSiri();
     initTheme();
+    initFilter();
+    initVideoPlayer();
     initModal();
     init3DModel();
-    updateLogos(); // Set initial logo
 });
 
 function cacheElements() {
@@ -43,6 +38,8 @@ function cacheElements() {
         siriImg: document.getElementById('siriImg'),
         siriBubble: document.getElementById('siriBubble'),
         siriMascot: document.getElementById('siriMascot'),
+        filterBtns: document.querySelectorAll('.filter-btn'),
+        projects: document.querySelectorAll('.project-card'),
         mobilePanel: document.getElementById('mobilePanel'),
         openMobilePanel: document.getElementById('openMobilePanel'),
         closeMobilePanel: document.getElementById('closeMobilePanel'),
@@ -53,12 +50,48 @@ function cacheElements() {
         closeHireModal: document.getElementById('closeHireModal'),
         hireForm: document.getElementById('hireForm'),
         formSuccess: document.getElementById('formSuccess'),
-        closeSuccess: document.getElementById('closeSuccess'),
-        desktopLogo: document.getElementById('desktopLogo'),
-        mobileLogo: document.getElementById('mobileLogo')
+        closeSuccess: document.getElementById('closeSuccess')
     };
 }
 
+/* ========== THEME & LOGIC ========== */
+function initTheme() {
+    if (!els.themeToggle) return;
+    
+    els.themeToggle.addEventListener('click', () => {
+        state.theme = state.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', state.theme);
+        localStorage.setItem('wyrm-theme', state.theme);
+        updateLogo(state.theme); // Update logo on toggle
+    });
+}
+
+function loadTheme() {
+    const saved = localStorage.getItem('wyrm-theme');
+    if (saved) {
+        state.theme = saved;
+        document.documentElement.setAttribute('data-theme', saved);
+        updateLogo(saved); // Update logo on load
+    } else {
+        updateLogo('dark'); // Default to dark logo
+    }
+}
+
+function updateLogo(theme) {
+    const logos = document.querySelectorAll('.logo-img');
+    const whiteLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/white%20logo%20png.png';
+    const blackLogo = 'https://raw.githubusercontent.com/wyrm-studios/websitewyrm/main/public/assets/black%20logo%20png.png';
+    
+    logos.forEach(logo => {
+        logo.style.opacity = '0'; // Fade out
+        setTimeout(() => {
+            logo.src = theme === 'light' ? blackLogo : whiteLogo;
+            logo.onload = () => { logo.style.opacity = '1'; }; // Fade in after load
+        }, 150);
+    });
+}
+
+/* ========== NAVIGATION ========== */
 function initNav() {
     els.navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -102,6 +135,11 @@ function switchPage(pageId) {
         targetPage.style.opacity = '1';
         targetPage.style.transform = 'translateY(0)';
         
+        if (pageId === 'work') {
+            const container = document.querySelector('.portfolio-container');
+            if (container) container.scrollTop = 0;
+        }
+        
         if (pageId !== 'about' && modelViewer) {
             disable3DModel();
         }
@@ -119,6 +157,7 @@ function switchPage(pageId) {
     });
 }
 
+/* ========== MOBILE NAV ========== */
 function initMobileNav() {
     if (!els.openMobilePanel || !els.closeMobilePanel) return;
     
@@ -144,37 +183,7 @@ function closeMobilePanel() {
     document.body.style.overflow = '';
 }
 
-function initTheme() {
-    if (!els.themeToggle) return;
-    
-    els.themeToggle.addEventListener('click', () => {
-        state.theme = state.theme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', state.theme);
-        localStorage.setItem('wyrm-theme', state.theme);
-        updateLogos(); // Update logos when theme changes
-    });
-}
-
-function loadTheme() {
-    const saved = localStorage.getItem('wyrm-theme');
-    if (saved) {
-        state.theme = saved;
-        document.documentElement.setAttribute('data-theme', saved);
-    }
-}
-
-// Function to update logos based on theme
-function updateLogos() {
-    const logoUrl = state.theme === 'dark' ? logoUrls.dark : logoUrls.light;
-    
-    if (els.desktopLogo) {
-        els.desktopLogo.src = logoUrl;
-    }
-    if (els.mobileLogo) {
-        els.mobileLogo.src = logoUrl;
-    }
-}
-
+/* ========== SIRI ========== */
 function initSiri() {
     if (!els.siriImg || !els.siriMascot) return;
     
@@ -208,6 +217,50 @@ function showSiriMessage() {
     setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
+/* ========== VIDEO ========== */
+function initVideoPlayer() {
+    const video = document.getElementById('introVideo');
+    const playButton = document.getElementById('playButton');
+    if (!video || !playButton) return;
+
+    playButton.addEventListener('click', () => {
+        if (video.paused) {
+            video.play();
+            playButton.style.opacity = '0';
+        } else {
+            video.pause();
+            playButton.style.opacity = '1';
+        }
+    });
+
+    video.addEventListener('play', () => { playButton.style.opacity = '0'; });
+    video.addEventListener('pause', () => { playButton.style.opacity = '1'; });
+}
+
+/* ========== FILTER ========== */
+function initFilter() {
+    if (!els.filterBtns || !els.projects) return;
+    els.filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            els.filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filterValue = btn.getAttribute('data-filter');
+            
+            els.projects.forEach(project => {
+                const category = project.getAttribute('data-category');
+                if (filterValue === 'all' || category === filterValue) {
+                    project.classList.remove('hidden');
+                    project.classList.add('show');
+                } else {
+                    project.classList.remove('show');
+                    project.classList.add('hidden');
+                }
+            });
+        });
+    });
+}
+
+/* ========== ACCORDION ========== */
 function toggleAccordion(element) {
     const item = element.parentElement;
     const isActive = item.classList.contains('active');
@@ -215,6 +268,7 @@ function toggleAccordion(element) {
     if (!isActive) item.classList.add('active');
 }
 
+/* ========== 3D MODEL ========== */
 function init3DModel() {
     modelViewer = document.getElementById('aboutModel');
     if (modelViewer) {
@@ -238,27 +292,27 @@ function disable3DModel() {
     }
 }
 
+/* ========== MODAL ========== */
 function initModal() {
     const openTriggers = [els.openHireModal, els.openHireModalMobile, els.openHireModalContact].filter(Boolean);
-    
     openTriggers.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
             openModal();
         });
     });
-    
+
     if (els.closeHireModal) {
         els.closeHireModal.addEventListener('click', closeModal);
     }
-    
+
     if (els.closeSuccess) {
         els.closeSuccess.addEventListener('click', () => {
             closeModal();
             resetForm();
         });
     }
-    
+
     if (els.hireModal) {
         els.hireModal.addEventListener('click', (e) => {
             if (e.target === els.hireModal) {
@@ -267,7 +321,7 @@ function initModal() {
             }
         });
     }
-    
+
     if (els.hireForm) {
         els.hireForm.addEventListener('submit', handleFormSubmit);
     }
@@ -298,7 +352,6 @@ function resetForm() {
 
 function handleFormSubmit(e) {
     e.preventDefault();
-    
     const formData = {
         brandName: document.getElementById('brandName').value,
         name: document.getElementById('name').value,
@@ -308,20 +361,19 @@ function handleFormSubmit(e) {
         message: document.getElementById('message').value,
         timestamp: new Date().toISOString()
     };
-    
+
     const subject = `New Inquiry from ${formData.brandName}`;
     const body = `Name: ${formData.name}
 Email: ${formData.email}
 Service: ${formData.service}
 Budget: ${formData.budget}
 Message: ${formData.message}`;
-    
     window.location.href = `mailto:contact.wyrmstudio@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
+
     if (els.hireForm && els.formSuccess) {
         els.hireForm.style.display = 'none';
         els.formSuccess.classList.add('active');
     }
-    
+
     console.log('Form submitted:', formData);
 }
