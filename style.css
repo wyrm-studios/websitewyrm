@@ -1240,3 +1240,57 @@ main {
     justify-content: center;
   }
 }
+/* Trusted By Section */
+.trusted-by-section {
+  padding: 4rem 2rem;
+  background: rgba(26, 26, 26, 0.3);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.trusted-by-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.trusted-by-label {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.trusted-by-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  opacity: 0.7;
+}
+
+.brand-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.brand-logo:hover {
+  color: var(--accent-blue);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .trusted-by-logos {
+    gap: 2rem;
+  }
+  .brand-logo {
+    font-size: 1.2rem;
+  }
+}
