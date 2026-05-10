@@ -18,7 +18,6 @@ let modelViewer = null;
 let introAudio = null;
 let subtitleTimeouts = [];
 
-// Subtitle timing data (in milliseconds)
 const subtitles = [
   { time: 0, text: "Hello there, stranger. " },
   { time: 2000, text: "If you're reading this, you've found your way here. " },
@@ -75,7 +74,6 @@ function cacheElements() {
   };
 }
 
-// ================= AUDIO INTRO =================
 function initAudioIntro() {
   introAudio = document.getElementById('introAudio');
   if (els.playIntroBtn && introAudio) {
@@ -132,7 +130,6 @@ function resetIntroUI() {
   subtitleTimeouts = [];
 }
 
-// ================= NAVIGATION =================
 function initNav() {
   els.navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -204,7 +201,6 @@ function closeMobilePanel() {
   document.body.style.overflow = '';
 }
 
-// ================= THEME =================
 function initTheme() {
   if (!els.themeToggle) return;
   els.themeToggle.addEventListener('click', () => {
@@ -238,7 +234,6 @@ function updateLogo(theme) {
   });
 }
 
-// ================= VIDEO PLAYER =================
 function initVideoPlayer() {
   const video = document.getElementById('introVideo');
   const playButton = document.getElementById('playButton');
@@ -258,12 +253,12 @@ function initVideoPlayer() {
   video.addEventListener('pause', () => playButton.style.opacity = '1');
 }
 
-// ================= SIRI MASCOT - FIXED =================
+// ✅ FIXED SIRI ANIMATION
 function initSiri() {
   if (!els.siriImg || !els.siriMascot) return;
 
-  // ✅ FIXED: Generate correct filenames (Untitled-10001.png to Untitled-10080.png)
   const frameUrls = [];
+  // Generate correct filenames: Untitled-10001.png to Untitled-10080.png
   for (let i = 1; i <= 80; i++) {
     const num = 10000 + i; // Creates: 10001, 10002, ... 10080
     const url = `public/assets/siri/Untitled-${num}.png`;
@@ -285,7 +280,7 @@ function initSiri() {
   // Show messages periodically
   setInterval(() => showSiriMessage(), 10000);
 
-  // ✅ ADD CLICK HANDLER WITH SOUND EFFECT
+  // Click handler with sound effect
   els.siriMascot.addEventListener('click', () => {
     showSiriMessage();
     playHuhSound();
@@ -300,16 +295,15 @@ function showSiriMessage() {
   setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
-// ✅ NEW FUNCTION: Play huh.mp3 sound effect
+// ✅ PLAY SOUND EFFECT - Fixed case sensitivity
 function playHuhSound() {
-  const huhAudio = new Audio('public/assets/huh.MP3');
+  const huhAudio = new Audio('public/assets/huh.MP3'); // Uppercase .MP3
   huhAudio.volume = 0.5;
   huhAudio.play().catch(error => {
     console.log('Audio playback failed:', error);
   });
 }
 
-// ================= FILTER =================
 function initFilter() {
   if (!els.filterBtns || !els.projects) return;
   els.filterBtns.forEach(btn => {
@@ -332,7 +326,6 @@ function initFilter() {
   });
 }
 
-// ================= ACCORDION =================
 function toggleAccordion(element) {
   const item = element.parentElement;
   const isActive = item.classList.contains('active');
@@ -340,7 +333,6 @@ function toggleAccordion(element) {
   if (!isActive) item.classList.add('active');
 }
 
-// ================= 3D MODEL =================
 function init3DModel() {
   modelViewer = document.getElementById('aboutModel');
   if (modelViewer) disable3DModel();
@@ -362,7 +354,6 @@ function disable3DModel() {
   }
 }
 
-// ================= MODAL =================
 function initModal() {
   const triggers = [els.openHireModal, els.openHireModalMobile, els.openHireModalContact].filter(Boolean);
   triggers.forEach(btn => btn.addEventListener('click', (e) => {
