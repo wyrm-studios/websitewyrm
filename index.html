@@ -204,70 +204,75 @@
     </section>
   </main>
 
-  <div id="hireModal" class="modal-overlay">
-    <div class="modal-content">
-      <button id="closeHireModal" class="modal-close" aria-label="Close modal">✕</button>
-      <div class="modal-header">
-        <h2>Let's Work</h2>
-        <p>contact@wyrmstudios.com</p>
+<div id="hireModal" class="modal-overlay">
+  <div class="modal-content">
+    <button id="closeHireModal" class="modal-close" aria-label="Close modal">✕</button>
+    <div class="modal-header">
+      <h2>Let's Work</h2>
+      <p>contact@wyrmstudio@gmail.com</p>
+    </div>
+    
+    <!-- ✅ Formspree Integration -->
+    <form id="hireForm" class="hire-form" action="https://formspree.io/f/mbdwpwbw" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="brandName">Brand / Company Name *</label>
+          <input type="text" id="brandName" name="brandName" required>
+        </div>
+        <div class="form-group">
+          <label for="name">Your Name *</label>
+          <input type="text" id="name" name="name" required>
+        </div>
       </div>
-      
-      <form id="hireForm" class="hire-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="brandName">Brand / Company Name *</label>
-            <input type="text" id="brandName" required>
-          </div>
-          <div class="form-group">
-            <label for="name">Your Name *</label>
-            <input type="text" id="name" required>
-          </div>
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="service">Service Needed *</label>
+          <select id="service" name="service" required>
+            <option value="" disabled selected>Select a service</option>
+            <option value="Branding & Identity">Branding & Identity</option>
+            <option value="Web Design">Web Design</option>
+            <option value="Motion Design">Motion Design</option>
+            <option value="Video Editing">Video Editing</option>
+            <option value="Full Package">Full Package</option>
+          </select>
         </div>
         <div class="form-group">
-          <label for="email">Email *</label>
-          <input type="email" id="email" required>
+          <label for="budget">Budget Range *</label>
+          <select id="budget" name="budget" required>
+            <option value="" disabled selected>Select budget</option>
+            <!-- ✅ Updated pricing starting at $200 -->
+            <option value="$200 - $500">$200 - $500</option>
+            <option value="$500 - $1,500">$500 - $1,500</option>
+            <option value="$1,500 - $3,000">$1,500 - $3,000</option>
+            <option value="$3,000 - $7,000">$3,000 - $7,000</option>
+            <option value="$7,000+">$7,000+</option>
+          </select>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="service">Service Needed *</label>
-            <select id="service" required>
-              <option value="" disabled selected>Select a service</option>
-              <option value="Branding & Identity">Branding & Identity</option>
-              <option value="Web Design">Web Design</option>
-              <option value="Motion Design">Motion Design</option>
-              <option value="Video Editing">Video Editing</option>
-              <option value="Full Package">Full Package</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="budget">Budget Range *</label>
-            <select id="budget" required>
-              <option value="" disabled selected>Select budget</option>
-              <option value="$1,000 - $3,000">$1,000 - $3,000</option>
-              <option value="$3,000 - $7,000">$3,000 - $7,000</option>
-              <option value="$7,000 - $15,000">$7,000 - $15,000</option>
-              <option value="$15,000+">$15,000+</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="message">Project Details *</label>
-          <textarea id="message" rows="4" required></textarea>
-        </div>
-        <button type="submit" class="modal-submit-btn">
-          Send Inquiry
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </button>
-      </form>
+      </div>
+      <div class="form-group">
+        <label for="message">Project Details *</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+      </div>
+      <!-- Hidden honeypot field for spam protection -->
+      <input type="text" name="_gotcha" style="display:none">
+      <button type="submit" class="modal-submit-btn">
+        Send Inquiry
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
+    </form>
 
-      <div id="formSuccess" class="form-success">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        <h3>Thank You!</h3>
-        <p>We've received your inquiry and will respond within 24 hours.</p>
-        <button id="closeSuccess" class="modal-close-btn">Close</button>
-      </div>
+    <div id="formSuccess" class="form-success">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      <h3>Thank You!</h3>
+      <p>We've received your inquiry and will respond within 24 hours.</p>
+      <button id="closeSuccess" class="modal-close-btn">Close</button>
     </div>
   </div>
+</div>
 
   <div class="siri-container">
     <div id="siriBubble" class="siri-bubble"></div>
