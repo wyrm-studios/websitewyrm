@@ -80,7 +80,6 @@ function initAudioIntro() {
   if (els.playIntroBtn && introAudio) {
     els.playIntroBtn.addEventListener('click', toggleAudioIntro);
     
-    // When audio ends naturally
     introAudio.addEventListener('ended', () => {
       resetIntroUI();
     });
@@ -91,7 +90,6 @@ function toggleAudioIntro() {
   if (!introAudio || !els.playIntroBtn || !els.subtitleContainer) return;
 
   if (introAudio.paused) {
-    // Play audio
     introAudio.play();
     els.playIntroBtn.classList.add('playing');
     els.playIntroBtn.innerHTML = `
@@ -102,21 +100,18 @@ function toggleAudioIntro() {
       <span>Playing Introduction...</span>
     `;
     els.subtitleContainer.classList.add('show');
-    
-    // Clear any existing timeouts
+
     subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
     subtitleTimeouts = [];
-    
-    // Set up subtitle timing
+
     subtitles.forEach(subtitle => {
       const timeout = setTimeout(() => {
         els.subtitleContainer.innerHTML = `<div class="subtitle-text">${subtitle.text}</div>`;
       }, subtitle.time);
       subtitleTimeouts.push(timeout);
     });
-    
+
   } else {
-    // Pause audio
     introAudio.pause();
     resetIntroUI();
   }
@@ -135,7 +130,6 @@ function resetIntroUI() {
     <span>Listen to Introduction</span>
   `;
   
-  // Clear all timeouts
   subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
   subtitleTimeouts = [];
 }
@@ -276,13 +270,14 @@ function initVideoPlayer() {
   video.addEventListener('pause', () => { playButton.style.opacity = '1'; });
 }
 
+// ✅ FIXED SIRI - Clean version with correct paths
 function initSiri() {
   if (!els.siriImg || !els.siriMascot) return;
   
   const frameUrls = [];
   for (let i = 1; i <= 80; i++) {
-    const num = i.toString().padStart(5, '0');
-    const url = `public/assets/siri/Untitled-1000${num}.png`;
+    const num = 10000 + i; // Creates: 10001, 10002, ... 10080
+    const url = `public/assets/siri/Untitled-${num}.png`;
     frameUrls.push(url);
   }
 
