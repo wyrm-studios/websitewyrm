@@ -1518,3 +1518,107 @@ main {
     font-size: 0.9rem;
   }
 }
+/* Fix 3D Model - Show only on desktop */
+@media (max-width: 768px) {
+  .about-model-area {
+    display: none; /* Hide 3D model on mobile */
+  }
+  
+  .about-glass-card {
+    margin-right: 0;
+    left: 0;
+    margin-top: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    position: relative;
+  }
+  
+  /* Fix text overflow and sizing */
+  .about-name {
+    font-size: 2rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .about-title {
+    font-size: 0.95rem;
+    word-wrap: break-word;
+  }
+  
+  .about-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  /* Fix accordion text overflow */
+  .accordion-content p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 0.5rem 1rem;
+  }
+  
+  /* Fix audio section */
+  .audio-intro-section {
+    padding: 1.2rem;
+    margin: 1.2rem 0;
+  }
+  
+  .play-intro-btn {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .subtitle-container {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+    word-wrap: break-word;
+  }
+  
+  /* Fix accordion headers */
+  .accordion-header {
+    font-size: 0.95rem;
+    padding: 1rem 0.5rem;
+  }
+  
+  /* Fix footer */
+  .about-footer {
+    font-size: 0.75rem;
+    padding: 1rem 0.5rem;
+  }
+  
+  .footer-links {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .footer-link {
+    font-size: 0.75rem;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .about-glass-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .about-name {
+    font-size: 1.8rem;
+  }
+  
+  .about-title {
+    font-size: 0.9rem;
+  }
+  
+  .about-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .accordion-content p {
+    font-size: 0.8rem;
+    padding: 0 0.3rem 1rem;
+  }
+}
