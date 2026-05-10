@@ -7,15 +7,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
   <style>
-    .project-detail-page {
+    /* Override main CSS to enable scrolling */
+    html, body {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      height: auto !important;
       min-height: 100vh;
-      padding: 6rem 2rem 4rem;
+    }
+    
+    .project-detail-page {
+      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      overflow-y: auto;
-      overflow-x: hidden;
+      padding: 6rem 2rem 4rem;
+      overflow: visible;
     }
     
     .project-back-btn {
@@ -205,7 +212,7 @@
   <div class="bg-gradient"></div>
   
   <div class="project-detail-page">
-    <a href="index.html#projects" class="project-back-btn">
+    <a href="../index.html#projects" class="project-back-btn">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
       Back to Projects
     </a>
@@ -221,7 +228,7 @@
     </div>
     
     <div class="project-thumbnail">
-      <img src="minato/minatopic.jpg" alt="Minato Sushi Brand Image">
+      <img src="minatopic.jpg" alt="Minato Sushi Brand Image">
     </div>
     
     <div class="project-content">
@@ -235,7 +242,7 @@
       <div class="project-links">
         <h2>Resources & Links</h2>
         <div class="resource-links">
-          <a href="minato/Brand Guidelines v6.pdf" target="_blank" class="resource-link">
+          <a href="Brand Guidelines v6.pdf" target="_blank" class="resource-link">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
             View Brand Guidelines (PDF)
           </a>
@@ -248,7 +255,7 @@
       
       <div class="pdf-viewer">
         <h2>Brand Guidelines</h2>
-        <iframe src="minato/Brand Guidelines v6.pdf" type="application/pdf"></iframe>
+        <iframe src="Brand Guidelines v6.pdf" type="application/pdf"></iframe>
       </div>
     </div>
   </div>
