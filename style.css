@@ -981,35 +981,6 @@ main {
   transform: translateY(0) scale(1);
 }
 
-@media (max-width: 900px) {
-  .nav-pill { display: none; }
-  .mobile-hamburger { display: flex; }
-  .mobile-panel { display: block; }
-}
-
-@media (max-width: 768px) {
-  .about-wrapper { flex-direction: column; padding: 8rem 0 2rem; }
-  .about-model-area { position: relative; width: 100%; height: 40vh; right: 0; top: 0; transform: none; }
-  .model-3d-about { transform: scale(1); }
-  .about-glass-card { margin-right: 0; left: 0; margin-top: -60px; width: 90%; max-height: none; }
-  .about-name { font-size: 2.5rem; }
-  .about-title { font-size: 1rem; }
-  .accordion-header { font-size: 1rem; padding: 1.2rem 0; }
-  .form-row { grid-template-columns: 1fr; }
-  .modal-content { padding: 1.5rem; }
-  .modal-header h2 { font-size: 1.5rem; }
-  .siri-container { bottom: 20px; right: 20px; }
-  .siri-mascot { width: 90px; height: 90px; }
-  
-  .projects-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-  .projects-title { font-size: 2.5rem; }
-}
-
-@media (max-width: 480px) {
-  .mobile-panel { width: 90%; }
-  .about-glass-card { padding: 2rem 1.5rem; }
-  .about-name { font-size: 2rem; }
-}
 /* Project Detail Page Styles */
 .project-detail {
   min-height: 100vh;
@@ -1216,30 +1187,6 @@ main {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 768px) {
-  .project-hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .project-hero-subtitle {
-    font-size: 1.1rem;
-  }
-  
-  .project-section-title {
-    font-size: 2rem;
-  }
-  
-  .project-resources {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .resource-btn {
-    width: 100%;
-    max-width: 300px;
-    justify-content: center;
-  }
-}
 /* Trusted By Section */
 .trusted-by-section {
   padding: 4rem 2rem;
@@ -1286,11 +1233,230 @@ main {
   transform: scale(1.05);
 }
 
+/* ============================================
+   MASSIVE MOBILE OPTIMIZATION SECTION
+   ============================================ */
+
+@media (max-width: 900px) {
+  .nav-pill { display: none; }
+  .mobile-hamburger { display: flex; }
+  .mobile-panel { display: block; }
+}
+
 @media (max-width: 768px) {
-  .trusted-by-logos {
-    gap: 2rem;
+  /* Fix Body/HTML overflow issues */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
   }
-  .brand-logo {
-    font-size: 1.2rem;
+  
+  /* Mobile Navigation Logo Fix */
+  .nav-pill {
+    display: flex !important;
+    min-width: auto;
+    width: 95%;
+    padding: 0.8rem 1.5rem;
+    justify-content: center;
+    top: 15px;
+  }
+  .nav-left, .nav-right { display: none; }
+  .nav-center { padding: 0; flex: 1; }
+  .logo-img { height: 36px; }
+
+  /* Video Container Fixes */
+  .video-container {
+    padding: 5rem 1rem 2rem;
+    min-height: auto;
+  }
+  .video-wrapper {
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  .video-wrapper iframe {
+    position: relative; /* Reset absolute for better sizing control if needed */
+    min-height: 220px;
+  }
+
+  /* About Section Fixes */
+  .about-wrapper {
+    flex-direction: column;
+    padding: 5rem 1rem 3rem;
+    min-height: auto;
+  }
+  .about-model-area {
+    position: relative;
+    width: 100%;
+    height: 35vh;
+    right: 0;
+    top: 0;
+    transform: none;
+    margin-bottom: 2rem;
+  }
+  .model-3d-about {
+    transform: scale(0.9);
+  }
+  .about-glass-card {
+    margin-right: 0;
+    left: 0;
+    margin-top: -40px;
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    max-height: none;
+    border-radius: 20px;
+  }
+  .about-name { font-size: 2.2rem; }
+  .about-title { font-size: 1rem; }
+
+  /* Projects Grid Fixes */
+  .projects-wrapper {
+    padding: 5rem 1rem 3rem;
+  }
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .project-card {
+    border-radius: 16px;
+  }
+  .project-info { padding: 1.5rem; }
+  .project-name { font-size: 1.5rem; }
+  .projects-title { font-size: 2.2rem; }
+
+  /* Modal Fixes (Critical) */
+  .modal-overlay {
+    padding: 1rem;
+    align-items: flex-start; /* Push modal to top so it can scroll */
+    padding-top: 4rem;
+  }
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    max-height: 90vh; /* Allow scrolling inside */
+    padding: 2rem 1.5rem 1.5rem;
+    border-radius: 20px;
+    margin-top: 0;
+    transform: none; /* Disable scale animation on small screens for stability */
+  }
+  .modal-header h2 { font-size: 1.6rem; }
+  .modal-close {
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+  }
+
+  /* Form Fixes */
+  .form-row {
+    grid-template-columns: 1fr; /* Stack inputs */
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.9rem 1rem;
+    font-size: 16px; /* Prevents iOS Zoom on Focus */
+    border-radius: 12px;
+  }
+  
+  /* Fix Dropdown Colors */
+  .form-group select {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F5F5F5' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+  .form-group select option {
+    background-color: var(--bg); /* Fix white background on dropdown options */
+    color: var(--text);
+  }
+
+  /* Contact Section */
+  .center-container {
+    padding: 5rem 1.5rem 3rem;
+  }
+  .section-title { font-size: 2rem; }
+
+  /* Siri Mascot */
+  .siri-container { bottom: 20px; right: 20px; }
+  .siri-mascot { width: 90px; height: 90px; }
+  .siri-bubble {
+    width: 220px;
+    max-width: 70vw;
+    right: -20px; /* Adjust bubble position */
+  }
+
+  /* Trusted By */
+  .trusted-by-logos { gap: 2rem; }
+  .brand-logo { font-size: 1.2rem; }
+}
+
+@media (max-width: 480px) {
+  /* Small Phone Optimizations */
+  .mobile-panel { width: 90%; }
+  .about-glass-card { padding: 1.5rem 1rem; }
+  .about-name { font-size: 2rem; }
+  
+  .video-container { padding: 5rem 0.5rem 1.5rem; }
+  .video-wrapper { border-radius: 12px; }
+  
+  .modal-content { padding: 1.5rem 1rem 1rem; }
+  .modal-header h2 { font-size: 1.4rem; }
+  
+  .project-hero-title { font-size: 2.5rem; }
+  .project-hero-subtitle { font-size: 1.1rem; }
+  
+  .siri-mascot { width: 70px; height: 70px; }
+  .siri-bubble { width: 180px; font-size: 0.85rem; }
+  
+  /* Development Notice Text Fix */
+  div[style*="position: fixed; bottom: 0"] {
+    font-size: 0.7rem;
+    padding: 0.5rem;
+  }
+}
+
+/* Fix for orientation changes */
+@media (max-width: 768px) and (orientation: landscape) {
+  .video-wrapper { max-height: 60vh; }
+  .about-model-area { height: 30vh; }
+  .about-glass-card { max-height: 70vh; overflow-y: auto; }
+  .modal-overlay { align-items: center; padding: 1rem; }
+}
+
+/* iOS Safari Specific Fixes */
+@supports (-webkit-touch-callout: none) {
+  .modal-content {
+    -webkit-overflow-scrolling: touch;
+  }
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Android Chrome Specific Fixes */
+@supports (-webkit-appearance: none) {
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    -webkit-appearance: none;
+    border-radius: 12px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
