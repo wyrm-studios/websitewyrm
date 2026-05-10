@@ -17,21 +17,23 @@ let els = {};
 let modelViewer = null;
 let introAudio = null;
 let subtitleTimeouts = [];
+let siriInteractionState = 0; // 0: default, 1: annoyed, 2: leave me alone
+let siriResetTimer = null;
 
-// Subtitle timing data (in milliseconds) - Adjusted for smooth sync
+// Subtitle timing data (in milliseconds)
 const subtitles = [
-  { time: 0, text: "Hello there, stranger." },
-  { time: 2500, text: "If you're reading this, you've found your way here." },
-  { time: 5500, text: "Maybe it was luck. Maybe curiosity." },
-  { time: 8500, text: "Or maybe you're here because you actually need something built." },
-  { time: 12000, text: "However you arrived, stay a while." },
-  { time: 15000, text: "Look around. I hope you enjoy what you find." },
-  { time: 19000, text: "I'm Wyrm. This is wyrm.studio." },
-  { time: 22500, text: "I make brands people remember." },
-  { time: 26000, text: "Not just visuals. Not just videos." },
-  { time: 29500, text: "I build complete identity systems:" },
-  { time: 33000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design" },
-  { time: 40000, text: "Take your time. The good stuff is right here." }
+  { time: 0, text: "Hello there, stranger. " },
+  { time: 2000, text: "If you're reading this, you've found your way here. " },
+  { time: 5000, text: "Maybe it was luck. Maybe curiosity. " },
+  { time: 8000, text: "Or maybe you're here because you actually need something built. " },
+  { time: 10000, text: "However you arrived, stay a while. " },
+  { time: 15500, text: "Look around. I hope you enjoy what you find. " },
+  { time: 20000, text: "I'm Wyrm. This is wyrm.studio. " },
+  { time: 22500, text: "I make brands people remember. " },
+  { time: 26000, text: "Not just visuals. Not just videos. " },
+  { time: 29500, text: "I build complete identity systems: " },
+  { time: 44000, text: "Brand Strategy • Brand Identity • Brand Films • Motion Design " },
+  { time: 50000, text: "Take your time. The good stuff is right here. " }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -79,10 +81,6 @@ function initAudioIntro() {
   introAudio = document.getElementById('introAudio');
   if (els.playIntroBtn && introAudio) {
     els.playIntroBtn.addEventListener('click', toggleAudioIntro);
-    
-    introAudio.addEventListener('ended', () => {
-      resetIntroUI();
-    });
   }
 }
 
@@ -111,6 +109,11 @@ function toggleAudioIntro() {
       subtitleTimeouts.push(timeout);
     });
 
+    const endTimeout = setTimeout(() => {
+      resetIntroUI();
+    }, 55000);
+    subtitleTimeouts.push(endTimeout);
+
   } else {
     introAudio.pause();
     resetIntroUI();
@@ -119,7 +122,6 @@ function toggleAudioIntro() {
 
 function resetIntroUI() {
   if (!els.playIntroBtn || !els.subtitleContainer) return;
-  
   els.subtitleContainer.classList.remove('show');
   els.subtitleContainer.innerHTML = '';
   els.playIntroBtn.classList.remove('playing');
@@ -129,7 +131,6 @@ function resetIntroUI() {
     </svg>
     <span>Listen to Introduction</span>
   `;
-  
   subtitleTimeouts.forEach(timeout => clearTimeout(timeout));
   subtitleTimeouts = [];
 }
@@ -270,13 +271,13 @@ function initVideoPlayer() {
   video.addEventListener('pause', () => { playButton.style.opacity = '1'; });
 }
 
-// ✅ FIXED SIRI - Clean version with correct paths
+// ✅ SIRI WITH SOUND EFFECTS
 function initSiri() {
   if (!els.siriImg || !els.siriMascot) return;
   
   const frameUrls = [];
   for (let i = 1; i <= 80; i++) {
-    const num = 10000 + i; // Creates: 10001, 10002, ... 10080
+    const num = 10000 + i;
     const url = `public/assets/siri/Untitled-${num}.png`;
     frameUrls.push(url);
   }
@@ -293,15 +294,57 @@ function initSiri() {
 
   setInterval(() => showSiriMessage(), 10000);
 
-  els.siriMascot.addEventListener('click', showSiriMessage);
+  // Click handler with sound effects and messages
+  els.siriMascot.addEventListener('click', () => {
+    if (siriInteractionState === 0) {
+      // First click: "Huh?"
+      playHuhSound();
+      showSpecificMessage("what you want more from me");
+      siriInteractionState = 1;
+    } else if (siriInteractionState === 1) {
+      // Second click: "Hahh!"
+      playHahhSound();
+      showSpecificMessage("leave me alone");
+      siriInteractionState = 2;
+    } else {
+      // If they keep clicking, keep saying "leave me alone"
+      playHahhSound();
+      showSpecificMessage("leave me alone");
+    }
+
+    // Reset state after 5 seconds of inactivity
+    clearTimeout(siriResetTimer);
+    siriResetTimer = setTimeout(() => {
+      siriInteractionState = 0;
+    }, 5000);
+  });
+}
+
+function showSpecificMessage(text) {
+  if (!els.siriBubble) return;
+  els.siriBubble.textContent = text;
+  els.siriBubble.classList.add('show');
+  setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
 }
 
 function showSiriMessage() {
-  if (!els.siriBubble) return;
+  if (!els.siriBubble || siriInteractionState !== 0) return;
   const msg = state.messages[Math.floor(Math.random() * state.messages.length)];
   els.siriBubble.textContent = msg;
   els.siriBubble.classList.add('show');
   setTimeout(() => els.siriBubble.classList.remove('show'), 5000);
+}
+
+function playHuhSound() {
+  const huhAudio = new Audio('public/assets/huh.MP3');
+  huhAudio.volume = 0.5;
+  huhAudio.play().catch(error => console.log('Audio playback failed:', error));
+}
+
+function playHahhSound() {
+  const hahhAudio = new Audio('public/assets/hahh.MP3');
+  hahhAudio.volume = 0.5;
+  hahhAudio.play().catch(error => console.log('Audio playback failed:', error));
 }
 
 function initFilter() {
