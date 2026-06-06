@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WYRM - Project | WYRM.STUDIOS®</title>
+  
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../favicon/favicon-96x96.png">
+  <link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg">
+  <link rel="shortcut icon" href="../favicon/favicon.ico">
+  <link rel="manifest" href="../favicon/site.webmanifest">
+  <meta name="apple-mobile-web-app-title" content="WYRM.STUDIOS">
+  <meta name="application-name" content="WYRM.STUDIOS">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -193,17 +203,134 @@
       border: none;
     }
     
+    /* Mobile Optimization */
     @media (max-width: 768px) {
+      .project-detail-page {
+        padding: 5rem 1rem 3rem;
+      }
+      
+      .project-back-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+      }
+      
       .project-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+      }
+      
+      .project-subtitle {
+        font-size: 1rem;
+      }
+      
+      .project-tags {
+        gap: 0.5rem;
+      }
+      
+      .project-tag {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
+      
+      .project-thumbnail {
+        margin: 0 auto 2.5rem;
+        border-radius: 16px;
       }
       
       .project-content {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+      
+      .project-description,
+      .project-links {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
+      
+      .project-description h2,
+      .project-links h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+      }
+      
+      .project-description p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+      
+      .resource-link {
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+      
+      .resource-link svg {
+        width: 20px;
+        height: 20px;
+      }
+      
+      .pdf-viewer {
+        margin-top: 1.5rem;
+        border-radius: 16px;
+      }
+      
+      .pdf-viewer h2 {
+        padding: 1.2rem 1.5rem;
+        font-size: 1.2rem;
       }
       
       .pdf-viewer iframe {
-        height: 500px;
+        height: 400px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .project-detail-page {
+        padding: 4.5rem 0.8rem 2rem;
+      }
+      
+      .project-title {
+        font-size: 1.8rem;
+      }
+      
+      .project-subtitle {
+        font-size: 0.9rem;
+      }
+      
+      .project-tag {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+      }
+      
+      .project-description,
+      .project-links {
+        padding: 1.2rem;
+      }
+      
+      .project-description h2,
+      .project-links h2 {
+        font-size: 1.2rem;
+      }
+      
+      .project-description p {
+        font-size: 0.85rem;
+      }
+      
+      .resource-link {
+        padding: 0.9rem;
+        font-size: 0.85rem;
+      }
+      
+      .pdf-viewer iframe {
+        height: 350px;
+      }
+    }
+    
+    /* Landscape orientation */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .pdf-viewer iframe {
+        height: 300px;
       }
     }
   </style>
