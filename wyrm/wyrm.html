@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>WYRM - Project | WYRM.STUDIOS®</title>
   
   <!-- Favicon -->
@@ -21,33 +21,33 @@
   <style>
     /* Override main CSS to enable scrolling */
     html, body {
-      overflow-y: auto !important;
-      overflow-x: hidden !important;
-      height: auto !important;
-      min-height: 100vh;
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
     }
     
     .project-detail-page {
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 6rem 2rem 4rem;
-      overflow: visible;
+      padding: 5rem 1rem 3rem;
+      overflow-x: hidden;
     }
     
     .project-back-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.8rem 1.5rem;
+      padding: 0.7rem 1.2rem;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid var(--glass-border);
       border-radius: 50px;
       color: var(--text);
       text-decoration: none;
       font-weight: 500;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       transition: all 0.3s ease;
+      font-size: 0.9rem;
     }
     
     .project-back-btn:hover {
@@ -57,116 +57,111 @@
     
     .project-header {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 2.5rem;
+      padding: 0 0.5rem;
     }
     
     .project-title {
-      font-size: 3.5rem;
+      font-size: 2.5rem;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       background: linear-gradient(135deg, var(--text) 0%, var(--accent-blue) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      line-height: 1.2;
     }
     
     .project-subtitle {
-      font-size: 1.2rem;
+      font-size: 0.95rem;
       color: var(--text-dim);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
     }
     
     .project-tags {
       display: flex;
-      gap: 1rem;
+      gap: 0.5rem;
       justify-content: center;
       flex-wrap: wrap;
+      padding: 0 0.5rem;
     }
     
     .project-tag {
-      padding: 0.6rem 1.5rem;
+      padding: 0.5rem 1rem;
       background: rgba(49, 108, 211, 0.15);
       border: 1px solid rgba(49, 108, 211, 0.3);
       border-radius: 50px;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: var(--accent-blue);
       font-weight: 500;
+      white-space: nowrap;
     }
     
     .project-thumbnail {
       width: 100%;
-      max-width: 900px;
-      margin: 0 auto 4rem;
-      border-radius: 24px;
+      margin: 0 auto 2rem;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
     
     .project-thumbnail img {
       width: 100%;
       height: auto;
       display: block;
+      object-fit: cover;
     }
     
     .project-content {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      margin-bottom: 4rem;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
     }
     
-    .project-description {
+    .project-description,
+    .project-links {
       background: rgba(26, 26, 26, 0.4);
       backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      padding: 2.5rem;
+      border-radius: 16px;
+      padding: 1.5rem;
     }
     
-    .project-description h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
+    .project-description h2,
+    .project-links h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
       color: var(--text);
     }
     
     .project-description p {
       color: var(--text-dim);
-      line-height: 1.8;
-      margin-bottom: 1rem;
-    }
-    
-    .project-links {
-      background: rgba(26, 26, 26, 0.4);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      padding: 2.5rem;
-    }
-    
-    .project-links h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+      font-size: 0.9rem;
     }
     
     .resource-links {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.75rem;
     }
     
     .resource-link {
       display: flex;
       align-items: center;
-      gap: 1rem;
-      padding: 1.2rem;
+      gap: 0.75rem;
+      padding: 0.9rem;
       background: rgba(49, 108, 211, 0.1);
       border: 1px solid rgba(49, 108, 211, 0.3);
-      border-radius: 16px;
+      border-radius: 12px;
       color: var(--text);
       text-decoration: none;
       font-weight: 500;
       transition: all 0.3s ease;
+      font-size: 0.9rem;
     }
     
     .resource-link:hover {
@@ -175,127 +170,124 @@
     }
     
     .resource-link svg {
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       flex-shrink: 0;
     }
     
     .pdf-viewer {
-      grid-column: 1 / -1;
       background: rgba(26, 26, 26, 0.4);
       backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      border-radius: 24px;
+      border-radius: 16px;
       overflow: hidden;
-      margin-top: 2rem;
+      margin-top: 1.5rem;
     }
     
     .pdf-viewer h2 {
-      padding: 1.5rem 2rem;
-      font-size: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      font-size: 1.2rem;
       border-bottom: 1px solid var(--glass-border);
       margin: 0;
+      background: rgba(0, 0, 0, 0.2);
     }
     
     .pdf-viewer iframe {
       width: 100%;
-      height: 800px;
+      height: 500px;
       border: none;
+      display: block;
     }
     
-    /* Mobile Optimization */
-    @media (max-width: 768px) {
+    /* Desktop styles */
+    @media (min-width: 769px) {
       .project-detail-page {
-        padding: 5rem 1rem 3rem;
+        padding: 6rem 2rem 4rem;
       }
       
       .project-back-btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-        margin-bottom: 2rem;
+        padding: 0.8rem 1.5rem;
+        margin-bottom: 3rem;
+      }
+      
+      .project-header {
+        margin-bottom: 4rem;
+        padding: 0;
       }
       
       .project-title {
-        font-size: 2.2rem;
+        font-size: 3.5rem;
       }
       
       .project-subtitle {
-        font-size: 1rem;
-      }
-      
-      .project-tags {
-        gap: 0.5rem;
+        font-size: 1.2rem;
       }
       
       .project-tag {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
       }
       
       .project-thumbnail {
-        margin: 0 auto 2.5rem;
-        border-radius: 16px;
+        max-width: 900px;
+        margin: 0 auto 4rem;
+        border-radius: 24px;
       }
       
       .project-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        margin-bottom: 2.5rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin-bottom: 4rem;
       }
       
       .project-description,
       .project-links {
-        padding: 1.5rem;
-        border-radius: 16px;
+        padding: 2.5rem;
+        border-radius: 24px;
       }
       
       .project-description h2,
       .project-links h2 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-      }
-      
-      .project-description p {
-        font-size: 0.9rem;
-        line-height: 1.6;
-      }
-      
-      .resource-link {
-        padding: 1rem;
-        font-size: 0.9rem;
-      }
-      
-      .resource-link svg {
-        width: 20px;
-        height: 20px;
-      }
-      
-      .pdf-viewer {
-        margin-top: 1.5rem;
-        border-radius: 16px;
-      }
-      
-      .pdf-viewer h2 {
-        padding: 1.2rem 1.5rem;
-        font-size: 1.2rem;
-      }
-      
-      .pdf-viewer iframe {
-        height: 400px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .project-detail-page {
-        padding: 4.5rem 0.8rem 2rem;
-      }
-      
-      .project-title {
         font-size: 1.8rem;
       }
       
+      .project-description p {
+        font-size: 0.95rem;
+      }
+      
+      .resource-link {
+        padding: 1.2rem;
+        font-size: 0.95rem;
+      }
+      
+      .resource-link svg {
+        width: 24px;
+        height: 24px;
+      }
+      
+      .pdf-viewer {
+        border-radius: 24px;
+        margin-top: 2rem;
+      }
+      
+      .pdf-viewer h2 {
+        padding: 1.5rem 2rem;
+        font-size: 1.5rem;
+      }
+      
+      .pdf-viewer iframe {
+        height: 800px;
+      }
+    }
+    
+    /* Small phones */
+    @media (max-width: 375px) {
+      .project-title {
+        font-size: 2rem;
+      }
+      
       .project-subtitle {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
       }
       
       .project-tag {
@@ -308,29 +300,15 @@
         padding: 1.2rem;
       }
       
-      .project-description h2,
-      .project-links h2 {
-        font-size: 1.2rem;
-      }
-      
-      .project-description p {
-        font-size: 0.85rem;
-      }
-      
-      .resource-link {
-        padding: 0.9rem;
-        font-size: 0.85rem;
-      }
-      
       .pdf-viewer iframe {
-        height: 350px;
+        height: 400px;
       }
     }
     
     /* Landscape orientation */
     @media (max-width: 768px) and (orientation: landscape) {
       .pdf-viewer iframe {
-        height: 300px;
+        height: 350px;
       }
     }
   </style>
